@@ -47,11 +47,18 @@ const Register = () => {
         role: type,
         name: type === 'company' ? form.companyName : form.name,
       })
-      toast.success('Welcome to Credence Edge! 🎉')
+      toast.success('Welcome to Credify!')
       if (type === 'company') nav('/company')
+      else if(type === 'admin') nav('/admin')
       else nav('/student-dashboard')
-    } catch {
-      toast.error('Something went wrong. Please try again.')
+    } catch (err) {
+    console.log(err);
+      console.log(err.response);
+      console.log(err.response?.data);
+
+      toast.error(
+        err.response?.data?.message || "Registration failed. Please try again."
+      );
     } finally {
       setLoading(false)
     }
@@ -65,17 +72,17 @@ const Register = () => {
         <div className="auth-left-content">
           <Logo size={36} light />
           <h2 className="auth-left-title" style={{ marginTop: 32 }}>
-            Build Your Verified<br />Skills on Credence Edge
+            Build Your Verified<br />Skills on Credify
           </h2>
           <p className="auth-left-subtitle">
-            Join thousands of students on Credence Edge proving what they can do through real projects and verified credentials.
+            Join thousands of students on Credify proving what they can do through real projects and verified credentials.
           </p>
           <div className="auth-feature-list">
             {[
               'Complete real micro-projects from companies',
-              'Earn free rated Credence Edge skill badges',
-              'Pay GHS 20 for verified Credence Edge certificates',
-              'Climb the anonymous Credence Edge leaderboard',
+              'Pay GHS 20 for verified Credify certificates',
+              'Track submissions and ratings privately',
+              'Build an employer-ready project portfolio',
             ].map(f => (
               <div key={f} className="auth-feature-item">
                 <span className="auth-feature-dot" />{f}
@@ -88,7 +95,7 @@ const Register = () => {
       <div className="auth-right" style={{ padding: '40px 48px' }}>
         <div className="auth-card" style={{ maxWidth: 400 }}>
           <div style={{ marginBottom: 24 }}><Logo size={30} /></div>
-          <h1 className="auth-title">Join Credence Edge</h1>
+          <h1 className="auth-title">Join Credify</h1>
           <p className="auth-subtitle">Start building your verified skills portfolio today</p>
 
           <div className="auth-type-tabs">
@@ -158,11 +165,11 @@ const Register = () => {
             )}
 
             <button type="submit" className="btn btn-primary btn-block" style={{ padding: '13px', fontSize: 15, marginTop: 4 }} disabled={loading}>
-              {loading ? 'Creating your Credence Edge account…' : 'Join Credence Edge Free →'}
+              {loading ? 'Creating your Credify account…' : 'Join Credify Free →'}
             </button>
 
             <p className="auth-footer-text">
-              Already have a Credence Edge account?{' '}
+              Already have a Credify account?{' '}
               <button type="button" className="auth-footer-link" onClick={() => nav('/login')}>Sign in</button>
             </p>
           </form>

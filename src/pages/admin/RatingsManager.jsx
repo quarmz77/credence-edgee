@@ -1,5 +1,6 @@
 import { SkillTag } from '@/components/badge/RatingBadge'
 import RatingBadge from '@/components/badge/RatingBadge'
+import { User } from 'lucide-react'
 
 const MOCK_RATED = [
   { id: 1, student: 'Annastasia Amarachi', project: 'Social Media Campaign Design', skill: 'Marketing', rating: 'green' },
@@ -9,7 +10,7 @@ const RatingsManager = () => (
   <div className="animate-fade-up">
     <div className="dash-header">
       <h1>Ratings Manager</h1>
-      <p>View and edit all issued Credence Edge ratings.</p>
+      <p>View and edit all issued Credify ratings.</p>
     </div>
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
       {MOCK_RATED.map(r => (
@@ -19,7 +20,7 @@ const RatingsManager = () => (
             <RatingBadge rating={r.rating} />
           </div>
           <h3 style={{ fontFamily: "'Clash Display',sans-serif", fontSize: 15, fontWeight: 700 }}>{r.project}</h3>
-          <p style={{ fontSize: 12.5, color: '#7a9ec0' }}>👤 {r.student}</p>
+          <p style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12.5, color: '#7a9ec0' }}><User size={12} /> {r.student}</p>
         </div>
       ))}
     </div>

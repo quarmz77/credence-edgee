@@ -17,8 +17,7 @@ const Logo = ({ size = 32, showText = true, light = false }) => {
       </svg>
       {showText && (
         <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
-          <span style={{ fontFamily: "'Clash Display', sans-serif", fontWeight: 700, fontSize: size * 0.48, color: textColor, letterSpacing: '-0.5px' }}>Credence</span>
-          <span style={{ fontFamily: "'Clash Display', sans-serif", fontWeight: 500, fontSize: size * 0.36, background: 'linear-gradient(90deg,#1565c0,#0d7a52)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', letterSpacing: '1.5px', textTransform: 'uppercase' }}>Edge</span>
+          <span style={{ fontFamily: "'Clash Display', sans-serif", fontWeight: 700, fontSize: size * 0.48, color: textColor, letterSpacing: '-0.5px' }}>Credify</span>
         </div>
       )}
     </div>

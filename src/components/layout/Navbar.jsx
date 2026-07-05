@@ -7,9 +7,8 @@ import { Search, X } from 'lucide-react'
 
 const NAV_LINKS = [
   { to: '/projects',    label: 'Projects'    },
-  { to: '/courses',     label: 'Courses'     },
-  { to: '/leaderboard', label: 'Leaderboard' },
-  { to: '/about',       label: 'About'       },
+  { to: '/about', label: 'About' },
+  {to: '/contact', label: 'Contact'}
 ]
 
 const Navbar = () => {
@@ -20,7 +19,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logout()
-    toast.success('Signed out of Credence Edge')
+    toast.success('Signed out of Credify')
     navigate('/')
   }
 
@@ -98,7 +97,7 @@ const Navbar = () => {
           display: 'flex', alignItems: 'center', gap: 10,
         }}>
           <Search size={16} color="#7a9ec0" />
-          <input autoFocus placeholder="Search Credence Edge projects, courses, skills…"
+          <input autoFocus placeholder="Search Credify projects and skills..."
             value={searchVal} onChange={e => setSearchVal(e.target.value)}
             onKeyDown={e => { if (e.key === 'Escape') { setSearchOpen(false); setSearchVal('') } }}
             style={{ flex: 1, border: 'none', outline: 'none', fontSize: 15, color: '#0d1f35', fontFamily: "'Plus Jakarta Sans',sans-serif", background: 'transparent' }} />

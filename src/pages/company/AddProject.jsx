@@ -17,7 +17,7 @@ const AddProject = () => {
     setLoading(true)
     await new Promise(r => setTimeout(r, 1000))
     setLoading(false)
-    toast.success('Project submitted to Credence Edge for admin approval!')
+    toast.success('Project submitted to Credify for admin approval!')
     nav('/company/projects')
   }
 
@@ -27,7 +27,7 @@ const AddProject = () => {
         <button className="btn btn-ghost btn-sm" style={{ marginBottom: 8, padding: '6px 0', color: '#7a9ec0' }} onClick={() => nav('/company/projects')}>
           <ArrowLeft size={14} /> Back to Projects
         </button>
-        <h1>Add New Credence Edge Project</h1>
+        <h1>Add New Credify Project</h1>
         <p>Your project will go live after admin approval.</p>
       </div>
 
@@ -64,7 +64,7 @@ const AddProject = () => {
           </div>
         </div>
         <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
-          {loading ? 'Submitting…' : 'Submit to Credence Edge for Approval →'}
+          {loading ? 'Submitting…' : 'Submit to Credify for Approval →'}
         </button>
       </form>
     </div>

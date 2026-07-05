@@ -10,13 +10,13 @@ const ApproveCompanies = () => {
   const [companies, setCompanies] = useState(MOCK_COMPANIES)
   const approve = (id) => {
     setCompanies(c => c.map(x => x.id === id ? { ...x, status: 'Approved' } : x))
-    toast.success('Company approved on Credence Edge!')
+    toast.success('Company approved on Credify!')
   }
   return (
     <div className="animate-fade-up">
       <div className="dash-header">
         <h1>Approve Companies</h1>
-        <p>Verify company profiles before they can post on Credence Edge.</p>
+        <p>Verify company profiles before they can post on Credify.</p>
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
         {companies.map(c => (

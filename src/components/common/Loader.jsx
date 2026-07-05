@@ -2,7 +2,7 @@ const Loader = ({ fullScreen = false, size = 36 }) => {
   const content = (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14 }}>
       <div style={{ width: size, height: size, border: '3px solid #e1ecf8', borderTopColor: '#0f3460', borderRightColor: '#0d7a52', borderRadius: '50%', animation: 'spin 0.7s linear infinite' }} />
-      <p style={{ fontSize: 14, color: '#7a9ec0', fontWeight: 500 }}>Loading Credence Edge…</p>
+      <p style={{ fontSize: 14, color: '#7a9ec0', fontWeight: 500 }}>Loading Credify…</p>
     </div>
   )
   if (fullScreen) return (

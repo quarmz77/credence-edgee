@@ -2,16 +2,13 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import useAuth from '@/hooks/useAuth'
 import Logo from './Logo'
 import toast from 'react-hot-toast'
-import { LayoutDashboard, FolderOpen, Upload, BookOpen, Award, FileText, BarChart2, User, LogOut, Plus, Users, CheckSquare, Building2 } from 'lucide-react'
+import { LayoutDashboard, FolderOpen, Upload, Award, FileText, User, LogOut, Plus, Users, CheckSquare, Building2 } from 'lucide-react'
 
 const STUDENT_LINKS = [
   { to: '/student-dashboard',              label: 'Overview',     icon: LayoutDashboard, end: true },
   { to: '/student-dashboard/projects',     label: 'My Projects',  icon: FolderOpen },
   { to: '/student-dashboard/submissions',  label: 'Submissions',  icon: Upload },
-  { to: '/student-dashboard/courses',      label: 'My Courses',   icon: BookOpen },
-  { to: '/student-dashboard/badges',       label: 'My Badges',    icon: Award },
   { to: '/student-dashboard/certificates', label: 'Certificates', icon: FileText },
-  { to: '/student-dashboard/leaderboard',  label: 'Leaderboard',  icon: BarChart2 },
   { to: '/student-dashboard/profile',      label: 'Profile',      icon: User },
 ]
 
@@ -39,7 +36,7 @@ const Sidebar = ({ role = 'student' }) => {
 
   const handleLogout = () => {
     logout()
-    toast.success('Signed out of Credence Edge')
+    toast.success('Signed out of Credify')
     navigate('/')
   }
 

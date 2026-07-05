@@ -1,51 +1,30 @@
-# Credence Edge
+# Credify Frontend
 
-A private, project-based learning and verification platform where students gain real experience, earn rated badges, and pay for credible proof of their skills.
+A React + Vite frontend for the Credify skill verification platform.
 
-## 🚀 Getting Started
+## What works now
+
+- User registration and login backed by real backend auth
+- Email verification and password reset flows
+- Admin dashboard overview and real user list fetching from backend
+- Admin-managed project approvals with persistent backend support
+- Company project submission flow backed by real project services
+- Role-based routing for Student, Graduate, Company, and Admin users
+- Protected routes with authentication and role guards
+- Reusable Axios API client with bearer token handling
+
+## Local setup
 
 ```bash
-cd credence-edge
+cd credence-edgee
 npm install
 npm run dev
 ```
 
 Open **http://localhost:5173**
 
-## 🔑 Demo Login
+## Notes
 
-This build uses mock authentication. Use any password, and choose your email to control which dashboard you land on:
-
-| Email contains | Role | Dashboard |
-|---|---|---|
-| anything else | Student | `/student-dashboard` |
-| "company" or "business" | Company | `/company` |
-| "admin" | Admin | `/admin` |
-| "graduate" | Graduate | `/student-dashboard` |
-
-Example: `company@business.com` → Company Dashboard
-
-## 🏗️ Tech Stack
-
-- React 18 + Vite
-- React Router v6
-- Zustand (state management)
-- React Hot Toast
-- Lucide React (icons)
-
-## 📁 Structure
-
-```
-src/
-├── components/   layout, common, badge, project, leaderboard
-├── pages/        public, auth, dashboard, company, admin
-├── routes/       AppRoutes, ProtectedRoute, PublicRoute, RoleBasedRoute
-├── store/        Zustand stores
-├── hooks/        useAuth, useProjects, useCourses, useLeaderboard, useModal
-├── context/      AuthContext
-└── utils/        constants.js (all mock data)
-```
-
-## 🎨 Brand
-
-Logo: geometric overlapping diamond shapes in blue-to-green gradient with upward arrow, on dark rounded background — matches the Credence Edge brand mark.
+- Uses `VITE_API_URL` environment variable for the backend base URL
+- Auth state is stored in localStorage with `ce_token` and `ce_user`
+- Pages include auth, public, dashboard, company, and admin

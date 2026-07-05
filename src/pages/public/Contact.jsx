@@ -15,14 +15,14 @@ const Contact = () => {
     setLoading(true)
     await new Promise(r => setTimeout(r, 1000))
     setLoading(false)
-    toast.success('Message sent to Credence Edge! We\'ll reply within 24 hours.')
+    toast.success('Message sent to Credify! We\'ll reply within 24 hours.')
     setForm({ name: '', email: '', subject: '', message: '' })
   }
 
   return (
     <div style={{ maxWidth: 980, margin: '0 auto', padding: '64px 40px' }}>
       <div style={{ marginBottom: 52 }}>
-        <h1 className="section-title" style={{ marginBottom: 8 }}>Contact Credence Edge</h1>
+        <h1 className="section-title" style={{ marginBottom: 8 }}>Contact Credify</h1>
         <p style={{ color: '#4a6080', fontSize: 15 }}>Students, companies, partners and press — we'd love to hear from you.</p>
       </div>
 
@@ -49,15 +49,15 @@ const Contact = () => {
             </div>
             <div className="form-group">
               <label className="form-label">Message <span style={{ color: '#ef4444' }}>*</span></label>
-              <textarea className="form-input" rows={5} placeholder="Tell the Credence Edge team what you need..." value={form.message} onChange={set('message')} style={{ resize: 'vertical' }} />
+              <textarea className="form-input" rows={5} placeholder="Tell the Credify team what you need..." value={form.message} onChange={set('message')} style={{ resize: 'vertical' }} />
             </div>
-            <Button type="submit" loading={loading} block>Send to Credence Edge →</Button>
+            <Button type="submit" loading={loading} block>Send to Credify →</Button>
           </form>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           {[
-            { icon: <Mail size={20} />, title: 'Email', value: 'hello@credenceedge.com.gh', sub: 'We reply within 24 hours' },
+            { icon: <Mail size={20} />, title: 'Email', value: 'hello@credify.com.gh', sub: 'We reply within 24 hours' },
             { icon: <Phone size={20} />, title: 'Phone / WhatsApp', value: '+233 XX XXX XXXX', sub: 'Mon–Fri, 9am–6pm GMT' },
             { icon: <MapPin size={20} />, title: 'Location', value: 'Accra, Ghana 🇬🇭', sub: 'Remote-first team' },
           ].map(item => (
