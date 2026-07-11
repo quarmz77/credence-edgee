@@ -3,22 +3,46 @@ import { useNavigate } from 'react-router-dom'
 import { SKILLS } from '@/utils/constants'
 import toast from 'react-hot-toast'
 import { ArrowLeft } from 'lucide-react'
+import { createProject } from '@/services/projectService'
 
 const AddProject = () => {
   const nav = useNavigate()
   const [loading, setLoading] = useState(false)
-  const [form, setForm] = useState({ title: '', description: '', skill: '', instructions: '', duration: '', type: 'Remote' })
+  const [form, setForm] = useState({
+    title: '',
+    description: '',
+    skill: '',
+    instructions: '',
+    duration: '',
+    type: 'Remote',
+  })
 
   const set = (k) => (e) => setForm(p => ({ ...p, [k]: e.target.value }))
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!form.title || !form.description || !form.skill) { toast.error('Please fill all required fields'); return }
+    if (!form.title || !form.description || !form.skill) {
+      toast.error('Please fill all required fields')
+      return
+    }
     setLoading(true)
-    await new Promise(r => setTimeout(r, 1000))
-    setLoading(false)
-    toast.success('Project submitted to Credify for admin approval!')
-    nav('/company/projects')
+    try {
+      await createProject({
+        title: form.title,
+        description: form.description,
+        skill: form.skill,
+        instructions: form.instructions,
+        duration: form.duration || 'Flexible',
+        type: form.type,
+        // approvalStatus defaults to "pending" on the backend
+      })
+      toast.success('Project submitted to Credify for admin approval!')
+      nav('/company/projects')
+    } catch (err) {
+      toast.error(err?.response?.data?.message || 'Failed to submit project')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (

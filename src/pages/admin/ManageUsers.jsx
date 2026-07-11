@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { getAdminUsers } from "@/services/adminService";
+import toast from "react-hot-toast";
+import { getAdminUsers, updateAdminUser } from "@/services/adminService";
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [updating, setUpdating] = useState(null); // id of user being updated
 
   useEffect(() => {
     const loadUsers = async () => {
@@ -12,6 +14,7 @@ const ManageUsers = () => {
         setUsers(response.users);
       } catch (error) {
         console.error(error);
+        toast.error("Failed to load users");
       } finally {
         setLoading(false);
       }
@@ -19,6 +22,28 @@ const ManageUsers = () => {
 
     loadUsers();
   }, []);
+
+  const toggleSuspend = async (user) => {
+    const newStatus = user.isSuspended ? false : true;
+    setUpdating(user._id);
+    try {
+      await updateAdminUser(user._id, { isSuspended: newStatus });
+      setUsers((us) =>
+        us.map((u) =>
+          u._id === user._id ? { ...u, isSuspended: newStatus } : u,
+        ),
+      );
+      toast.success(
+        newStatus
+          ? `${user.name} suspended.`
+          : `${user.name} reactivated.`,
+      );
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Update failed");
+    } finally {
+      setUpdating(null);
+    }
+  };
 
   return (
     <div className="animate-fade-up">
@@ -30,7 +55,7 @@ const ManageUsers = () => {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "1.5fr 1.5fr 1fr 1fr 1fr",
+            gridTemplateColumns: "1.5fr 1.5fr 1fr 1fr 1fr 1fr",
             gap: 0,
             padding: "16px 24px",
             borderBottom: "1px solid #e1ecf8",
@@ -45,6 +70,7 @@ const ManageUsers = () => {
           <div>Role</div>
           <div>Status</div>
           <div>Joined</div>
+          <div>Actions</div>
         </div>
         {loading ? (
           <div
@@ -61,10 +87,10 @@ const ManageUsers = () => {
         ) : (
           users.map((u, i) => (
             <div
-              key={u.id}
+              key={u._id ?? u.id}
               style={{
                 display: "grid",
-                gridTemplateColumns: "1.5fr 1.5fr 1fr 1fr 1fr",
+                gridTemplateColumns: "1.5fr 1.5fr 1fr 1fr 1fr 1fr",
                 gap: 0,
                 padding: "16px 24px",
                 borderBottom:
@@ -87,14 +113,46 @@ const ManageUsers = () => {
               </span>
               <span
                 className={
-                  u.emailVerified ? "pill pill-green" : "pill pill-yellow"
+                  u.isSuspended
+                    ? "pill pill-red"
+                    : u.emailVerified
+                      ? "pill pill-green"
+                      : "pill pill-yellow"
                 }
                 style={{ textTransform: "capitalize" }}
               >
-                {u.emailVerified ? "Verified" : "Pending Verification"}
+                {u.isSuspended
+                  ? "Suspended"
+                  : u.emailVerified
+                    ? "Verified"
+                    : "Pending"}
               </span>
               <div style={{ fontSize: 12, color: "#4a6080" }}>
                 {new Date(u.createdAt).toLocaleDateString()}
+              </div>
+              <div>
+                {u.role !== "admin" && (
+                  <button
+                    className="btn btn-sm"
+                    disabled={updating === (u._id ?? u.id)}
+                    style={{
+                      background: u.isSuspended ? "#dcfce7" : "#fee2e2",
+                      color: u.isSuspended ? "#166534" : "#991b1b",
+                      border: "none",
+                      fontSize: 12,
+                      fontWeight: 600,
+                      cursor: "pointer",
+                      opacity: updating === (u._id ?? u.id) ? 0.6 : 1,
+                    }}
+                    onClick={() => toggleSuspend(u)}
+                  >
+                    {updating === (u._id ?? u.id)
+                      ? "..."
+                      : u.isSuspended
+                        ? "Reactivate"
+                        : "Suspend"}
+                  </button>
+                )}
               </div>
             </div>
           ))

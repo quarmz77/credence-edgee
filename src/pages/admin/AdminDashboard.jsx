@@ -5,7 +5,6 @@ import {
   FolderOpen,
   CheckSquare,
   Star,
-  Building2,
   FileText,
   LayoutGrid,
 } from "lucide-react";
@@ -139,11 +138,6 @@ const AdminDashboard = () => {
               <FileText size={20} key="certificates" />,
               "Certificates",
               "/admin/certificates",
-            ],
-            [
-              <Building2 size={20} key="companies" />,
-              "Approve Companies",
-              "/admin/companies",
             ],
           ].map(([icon, label, path]) => (
             <button

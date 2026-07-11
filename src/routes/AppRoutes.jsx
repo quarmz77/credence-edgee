@@ -37,7 +37,6 @@ import ManageProjects from "@/pages/admin/ManageProjects";
 import ManageUsers from "@/pages/admin/ManageUsers";
 import ReviewSubmissions from "@/pages/admin/ReviewSubmissions";
 import CertificatesApproval from "@/pages/admin/CertificatesApproval";
-import ApproveCompanies from "@/pages/admin/ApproveCompanies";
 import RatingsManager from "@/pages/admin/RatingsManager";
 
 const RoleRedirect = () => {
@@ -136,7 +135,6 @@ const AppRoutes = () => (
       <Route path="users" element={<ManageUsers />} />
       <Route path="submissions" element={<ReviewSubmissions />} />
       <Route path="certificates" element={<CertificatesApproval />} />
-      <Route path="companies" element={<ApproveCompanies />} />
       <Route path="ratings" element={<RatingsManager />} />
     </Route>
 

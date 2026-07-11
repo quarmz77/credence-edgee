@@ -1,7 +1,7 @@
 import API from "../api/axios";
 
-export const getProjects = async () => {
-  return await API.get("/projects");
+export const getProjects = async (params = {}) => {
+  return await API.get("/projects", { params });
 };
 
 export const getProject = async (id) => {

@@ -26,7 +26,6 @@ const ADMIN_LINKS = [
   { to: '/admin/submissions',  label: 'Review Submissions', icon: CheckSquare },
   { to: '/admin/ratings',      label: 'Ratings Manager',    icon: Award },
   { to: '/admin/certificates', label: 'Certificates',       icon: FileText },
-  { to: '/admin/companies',    label: 'Approve Companies',  icon: Building2 },
 ]
 
 const Sidebar = ({ role = 'student' }) => {

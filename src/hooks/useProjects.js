@@ -5,22 +5,25 @@ import { useProjectStore } from "@/store/projectStore";
 const normalizeProject = (project) => {
   const techStack = Array.isArray(project.techStack) ? project.techStack : [];
   const tags = Array.isArray(project.tags) ? project.tags : [];
-  const skill = techStack[0] || tags[0] || "General";
+  // Use the dedicated skill field first, then fall back to techStack/tags
+  const skill = project.skill || techStack[0] || tags[0] || "General";
 
   return {
     id: project.id || project._id,
     ownerId: project.ownerId,
     title: project.title || "",
     description: project.description || "",
-    status: project.status || "Open",
+    skill,
+    instructions: project.instructions || "",
+    duration: project.duration || "Flexible",
+    type: project.type || "Remote",
+    status: project.status || "draft",
+    approvalStatus: project.approvalStatus || "approved",
     techStack,
     tags,
     repositoryUrl: project.repositoryUrl || "",
     liveUrl: project.liveUrl || "",
-    skill,
     company: project.company || "Credify",
-    duration: project.duration || "Flexible",
-    type: project.type || "Remote",
     createdAt: project.createdAt,
     updatedAt: project.updatedAt,
   };
@@ -46,25 +49,14 @@ const useProjects = () => {
       setLoading(true);
 
       try {
-        const response = await getProjects();
+        // Only load admin-approved projects for public browsing
+        const response = await getProjects({ approvalStatus: "approved" });
         const items = response?.data?.data?.items ?? [];
         const mappedProjects = items.map(normalizeProject);
 
         if (!isMounted) return;
 
         setProjects(mappedProjects);
-
-        if (myProjects.length === 0 && mappedProjects.length > 0) {
-          setMyProjects(
-            mappedProjects.slice(0, 2).map((project) => ({
-              ...project,
-              status: "In Progress",
-              rating: null,
-              feedback: null,
-              submittedAt: null,
-            })),
-          );
-        }
       } catch (error) {
         console.error("Failed to load projects", error);
       } finally {
@@ -77,7 +69,7 @@ const useProjects = () => {
     return () => {
       isMounted = false;
     };
-  }, [myProjects.length, setLoading, setMyProjects, setProjects]);
+  }, [setLoading, setMyProjects, setProjects]);
 
   const filtered = useMemo(() => {
     if (filter === "All") return projects;
