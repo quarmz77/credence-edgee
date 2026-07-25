@@ -4,23 +4,78 @@ import useProjects from "@/hooks/useProjects";
 import { SkillTag } from "@/components/badge/RatingBadge";
 import RatingBadge from "@/components/badge/RatingBadge";
 import EmptyState from "@/components/common/EmptyState";
+import Modal from "@/components/common/Modal";
 import toast from "react-hot-toast";
-import { Building, Pin } from "lucide-react";
+import { Building, Pin, UploadCloud } from "lucide-react";
+import { createSubmission } from "@/services/submissionService";
 
 const MyProjects = () => {
-  const { myProjects } = useProjects();
+  const { myProjects, submissionsLoading, setMyProjects } = useProjects();
   const [filter, setFilter] = useState("All");
+  const [submitModal, setSubmitModal] = useState(null); // project to submit
+  const [submitForm, setSubmitForm] = useState({ title: "", content: "", attachments: "" });
+  const [submitting, setSubmitting] = useState(false);
   const nav = useNavigate();
 
-  const filters = ["All", "In Progress", "Submitted", "Reviewed"];
+  const filters = ["All", "In Progress", "Submitted", "In Review", "Reviewed"];
   const shown =
     filter === "All"
       ? myProjects
       : myProjects.filter((p) => p.status === filter);
 
-  const handleSubmit = (project) => {
-    toast.success(`Work submitted for "${project.title}" on Credify!`);
+  const openSubmitModal = (project) => {
+    setSubmitForm({ title: project.title, content: "", attachments: "" });
+    setSubmitModal(project);
   };
+
+  const handleSubmit = async () => {
+    if (!submitModal) return;
+    if (!submitModal.projectId) {
+      toast.error("Cannot submit — project ID is missing. Please reload the page.");
+      return;
+    }
+    if (!submitForm.content.trim()) {
+      toast.error("Please describe your work before submitting.");
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      const attachmentsList = submitForm.attachments
+        .split(",")
+        .map((a) => a.trim())
+        .filter(Boolean);
+
+      await createSubmission({
+        projectId: submitModal.projectId,
+        title: submitForm.title || submitModal.title,
+        content: submitForm.content,
+        attachments: attachmentsList,
+      });
+
+      toast.success(`Work submitted for "${submitModal.title}" on Credify!`);
+      setSubmitModal(null);
+      // Refresh submissions by reloading the page data
+      window.location.reload();
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Failed to submit work. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  if (submissionsLoading) {
+    return (
+      <div className="animate-fade-up">
+        <div className="dash-header">
+          <h1>My Credify Projects</h1>
+        </div>
+        <div style={{ padding: "40px", textAlign: "center", color: "#7a9ec0" }}>
+          Loading your projects...
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="animate-fade-up">
@@ -127,9 +182,9 @@ const MyProjects = () => {
                 {p.status === "In Progress" && (
                   <button
                     className="btn btn-primary btn-sm"
-                    onClick={() => handleSubmit(p)}
+                    onClick={() => openSubmitModal(p)}
                   >
-                    Submit Work →
+                    <UploadCloud size={14} /> Submit Work →
                   </button>
                 )}
               </div>
@@ -137,6 +192,69 @@ const MyProjects = () => {
           ))}
         </div>
       )}
+
+      {/* Submit Work Modal */}
+      <Modal
+        isOpen={!!submitModal}
+        onClose={() => setSubmitModal(null)}
+        title="Submit Your Work"
+        size="sm"
+        footer={
+          <>
+            <button
+              className="btn btn-outline"
+              onClick={() => setSubmitModal(null)}
+              disabled={submitting}
+            >
+              Cancel
+            </button>
+            <button
+              className="btn btn-primary"
+              onClick={handleSubmit}
+              disabled={submitting}
+            >
+              {submitting ? "Submitting..." : "Submit Work →"}
+            </button>
+          </>
+        }
+      >
+        {submitModal && (
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            <p style={{ fontSize: 14, color: "#4a6080" }}>
+              Submitting work for <strong>{submitModal.title}</strong>.
+            </p>
+            <div className="form-group">
+              <label className="form-label">Submission Title</label>
+              <input
+                className="form-input"
+                value={submitForm.title}
+                onChange={(e) => setSubmitForm((f) => ({ ...f, title: e.target.value }))}
+                placeholder="Brief title for your submission"
+              />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Description / Work Summary *</label>
+              <textarea
+                className="form-input"
+                rows={4}
+                value={submitForm.content}
+                onChange={(e) => setSubmitForm((f) => ({ ...f, content: e.target.value }))}
+                placeholder="Describe what you built, key decisions, and any notes for the reviewer..."
+                style={{ resize: "vertical" }}
+              />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Links / Attachments (comma-separated)</label>
+              <input
+                className="form-input"
+                value={submitForm.attachments}
+                onChange={(e) => setSubmitForm((f) => ({ ...f, attachments: e.target.value }))}
+                placeholder="https://github.com/..., https://drive.google.com/..."
+              />
+            </div>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 };

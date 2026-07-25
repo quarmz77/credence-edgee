@@ -25,18 +25,18 @@ const ManageUsers = () => {
 
   const toggleSuspend = async (user) => {
     const newStatus = user.isSuspended ? false : true;
-    setUpdating(user._id);
+    setUpdating(user.id);
     try {
-      await updateAdminUser(user._id, { isSuspended: newStatus });
+      await updateAdminUser(user.id, { isSuspended: newStatus });
       setUsers((us) =>
         us.map((u) =>
-          u._id === user._id ? { ...u, isSuspended: newStatus } : u,
-        ),
+          u.id === user.id ? { ...u, isSuspended: newStatus } : u
+        )
       );
       toast.success(
         newStatus
           ? `${user.name} suspended.`
-          : `${user.name} reactivated.`,
+          : `${user.name} reactivated.`
       );
     } catch (error) {
       toast.error(error?.response?.data?.message || "Update failed");
@@ -87,7 +87,7 @@ const ManageUsers = () => {
         ) : (
           users.map((u, i) => (
             <div
-              key={u._id ?? u.id}
+              key={u.id}
               style={{
                 display: "grid",
                 gridTemplateColumns: "1.5fr 1.5fr 1fr 1fr 1fr 1fr",
@@ -134,7 +134,7 @@ const ManageUsers = () => {
                 {u.role !== "admin" && (
                   <button
                     className="btn btn-sm"
-                    disabled={updating === (u._id ?? u.id)}
+                    disabled={updating === u.id}
                     style={{
                       background: u.isSuspended ? "#dcfce7" : "#fee2e2",
                       color: u.isSuspended ? "#166534" : "#991b1b",
@@ -142,11 +142,11 @@ const ManageUsers = () => {
                       fontSize: 12,
                       fontWeight: 600,
                       cursor: "pointer",
-                      opacity: updating === (u._id ?? u.id) ? 0.6 : 1,
+                      opacity: updating === u.id ? 0.6 : 1,
                     }}
                     onClick={() => toggleSuspend(u)}
                   >
-                    {updating === (u._id ?? u.id)
+                    {updating === u.id
                       ? "..."
                       : u.isSuspended
                         ? "Reactivate"

@@ -1,4 +1,4 @@
-﻿import { createContext, useContext, useState, useEffect, useCallback } from 'react'
+import { createContext, useContext, useState, useEffect, useCallback } from 'react'
 import { registerUser, getMe, loginUser, updateProfile } from '@/services/authService'
 
 const AuthContext = createContext(null)
@@ -16,9 +16,12 @@ export function AuthProvider({ children }) {
       return
     }
 
-    getMe(storedToken)
+    // getMe uses the token from the axios interceptor (ce_token in localStorage)
+    getMe()
       .then((res) => {
-        setUser(res.user)
+        // Backend: { success, data: { user } } → authService returns res.data.data → { user }
+        const userData = res?.user || res
+        setUser(userData)
         setToken(storedToken)
       })
       .catch(() => {
@@ -31,11 +34,8 @@ export function AuthProvider({ children }) {
   }, [])
 
   const login = useCallback(async (email, password) => {
-    const response = await loginUser({
-      email,
-      password,
-    })
-
+    const response = await loginUser({ email, password })
+    // authService.loginUser returns res.data.data → { accessToken, user }
     const { accessToken, user } = response
 
     setUser(user)
@@ -48,7 +48,7 @@ export function AuthProvider({ children }) {
 
   const register = useCallback(async (data) => {
     const response = await registerUser(data)
-
+    // authService.registerUser returns res.data.data → { accessToken, user }
     const { accessToken, user } = response
 
     setUser(user)
@@ -72,7 +72,8 @@ export function AuthProvider({ children }) {
 
   const updateUser = useCallback(async (updates) => {
     const res = await updateProfile(updates)
-    const updatedUser = res.user
+    // authService.updateProfile returns res.data.data → { user }
+    const updatedUser = res?.user || res
     setUser(updatedUser)
     localStorage.setItem('ce_user', JSON.stringify(updatedUser))
     return updatedUser

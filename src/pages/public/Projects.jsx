@@ -27,17 +27,26 @@ const Projects = () => {
     ),
   ];
 
-  const handleStart = (project) => {
+  const [starting, setStarting] = useState(null); // projectId being started
+
+  const handleStart = async (project) => {
     if (!isAuthenticated) {
       nav("/register");
       return;
     }
-    const result = startProject(project);
-    if (result?.already)
+    setStarting(project.id);
+    const result = await startProject(project);
+    setStarting(null);
+
+    if (result?.already) {
       toast("Already in My Projects", { icon: <Info size={18} /> });
-    else
+      nav("/student-dashboard/projects");
+    } else if (result?.error) {
+      toast.error(result.error);
+    } else {
       toast.success(`"${project.title}" added to your Credify projects!`);
-    setSelected(project);
+      setSelected(project);
+    }
   };
 
   return (
@@ -185,14 +194,16 @@ const Projects = () => {
             </div>
             <button
               className={`btn btn-sm btn-block ${p.status === "Closed" ? "btn-ghost" : "btn-primary"}`}
-              disabled={p.status === "Closed"}
+              disabled={p.status === "Closed" || starting === p.id}
               onClick={() => handleStart(p)}
             >
-              {p.status === "Closed"
-                ? "Project Closed"
-                : isAuthenticated
-                  ? "Start on Credify →"
-                  : "Join Credify to Start →"}
+              {starting === p.id
+                ? "Adding…"
+                : p.status === "Closed"
+                  ? "Project Closed"
+                  : isAuthenticated
+                    ? "Start on Credify →"
+                    : "Join Credify to Start →"}
             </button>
           </div>
         ))}

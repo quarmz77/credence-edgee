@@ -5,10 +5,23 @@ import EmptyState from "@/components/common/EmptyState";
 import { Building, UploadCloud } from "lucide-react";
 
 const MySubmissions = () => {
-  const { myProjects } = useProjects();
+  const { myProjects, submissionsLoading } = useProjects();
   const submissions = myProjects.filter(
-    (p) => p.status === "Submitted" || p.status === "Reviewed",
+    (p) => p.status === "Submitted" || p.status === "In Review" || p.status === "Reviewed",
   );
+
+  if (submissionsLoading) {
+    return (
+      <div className="animate-fade-up">
+        <div className="dash-header">
+          <h1>My Submissions</h1>
+        </div>
+        <div style={{ padding: "40px", textAlign: "center", color: "#7a9ec0" }}>
+          Loading your submissions...
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="animate-fade-up">
@@ -59,7 +72,7 @@ const MySubmissions = () => {
                   marginBottom: 10,
                 }}
               >
-                <Building size={12} /> {p.company} · Submitted {p.submittedAt}
+                <Building size={12} /> {p.company} {p.submittedAt ? `· Submitted ${p.submittedAt}` : ""}
               </p>
               {p.feedback && (
                 <div

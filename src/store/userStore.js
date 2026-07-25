@@ -1,11 +1,15 @@
 import { create } from 'zustand'
-import { MOCK_CERTIFICATE_ITEMS } from '@/utils/constants'
 
 export const useUserStore = create((set) => ({
-  certificateItems: MOCK_CERTIFICATE_ITEMS,
+  // Real certificate items derived from submissions with ratings
+  certificateItems: [],
   certificates: [],
+  certificatesLoading: false,
+
   setCertificateItems: (certificateItems) => set({ certificateItems }),
   setCertificates: (certs) => set({ certificates: certs }),
+  setCertificatesLoading: (certificatesLoading) => set({ certificatesLoading }),
+
   markCertPaid: (certificateItemId) =>
     set((state) => ({
       certificateItems: state.certificateItems.map((item) =>

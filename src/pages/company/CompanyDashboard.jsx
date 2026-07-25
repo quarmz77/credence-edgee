@@ -1,12 +1,39 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SkillTag } from "@/components/badge/RatingBadge";
 import ProjectStatusBadge from "@/components/project/ProjectStatusBadge";
-import useProjects from "@/hooks/useProjects";
+import useAuth from "@/hooks/useAuth";
+import { getProjects } from "@/services/projectService";
 import { Plus, FolderOpen, CheckCircle, Clock } from "lucide-react";
+import toast from "react-hot-toast";
 
 const CompanyDashboard = () => {
   const nav = useNavigate();
-  const { projects } = useProjects();
+  const { user } = useAuth();
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!user?.id) return;
+    const loadDashboardProjects = async () => {
+      try {
+        setLoading(true);
+        const res = await getProjects({ ownerId: user.id });
+        const items = res?.data?.data?.items ?? [];
+        setProjects(items);
+      } catch (err) {
+        console.error(err);
+        toast.error("Failed to load dashboard projects");
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadDashboardProjects();
+  }, [user?.id]);
+
+  const totalProjects = projects.length;
+  const openProjects = projects.filter((p) => p.status === "Open" || p.status === "active").length;
+  const closedProjects = projects.filter((p) => p.status === "Closed" || p.status === "completed").length;
   const myProjects = projects.slice(0, 3);
 
   return (
@@ -36,45 +63,51 @@ const CompanyDashboard = () => {
         </div>
       </div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3,1fr)",
-          gap: 16,
-          marginBottom: 28,
-        }}
-      >
-        {[
-          {
-            label: "Total Projects",
-            value: myProjects.length,
-            icon: <FolderOpen size={20} />,
-            grad: "linear-gradient(135deg,#1565c0,#42a5f5)",
-          },
-          {
-            label: "Open Projects",
-            value: myProjects.filter((p) => p.status === "Open").length,
-            icon: <CheckCircle size={20} />,
-            grad: "linear-gradient(135deg,#0d7a52,#1dbf86)",
-          },
-          {
-            label: "Closed Projects",
-            value: myProjects.filter((p) => p.status === "Closed").length,
-            icon: <Clock size={20} />,
-            grad: "linear-gradient(135deg,#7c3aed,#a78bfa)",
-          },
-        ].map((c) => (
-          <div
-            key={c.label}
-            className="stat-card"
-            style={{ background: c.grad }}
-          >
-            <div style={{ marginBottom: 10 }}>{c.icon}</div>
-            <div className="stat-card-value">{c.value}</div>
-            <div className="stat-card-label">{c.label}</div>
-          </div>
-        ))}
-      </div>
+      {loading ? (
+        <div style={{ padding: 32, textAlign: "center", color: "#4a6080" }}>
+          Loading your dashboard statistics...
+        </div>
+      ) : (
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3,1fr)",
+            gap: 16,
+            marginBottom: 28,
+          }}
+        >
+          {[
+            {
+              label: "Total Projects",
+              value: totalProjects,
+              icon: <FolderOpen size={20} />,
+              grad: "linear-gradient(135deg,#1565c0,#42a5f5)",
+            },
+            {
+              label: "Open Projects",
+              value: openProjects,
+              icon: <CheckCircle size={20} />,
+              grad: "linear-gradient(135deg,#0d7a52,#1dbf86)",
+            },
+            {
+              label: "Closed Projects",
+              value: closedProjects,
+              icon: <Clock size={20} />,
+              grad: "linear-gradient(135deg,#7c3aed,#a78bfa)",
+            },
+          ].map((c) => (
+            <div
+              key={c.label}
+              className="stat-card"
+              style={{ background: c.grad }}
+            >
+              <div style={{ marginBottom: 10 }}>{c.icon}</div>
+              <div className="stat-card-value">{c.value}</div>
+              <div className="stat-card-label">{c.label}</div>
+            </div>
+          ))}
+        </div>
+      )}
 
       <div
         style={{
@@ -106,27 +139,37 @@ const CompanyDashboard = () => {
         >
           Your Projects
         </h3>
-        {myProjects.map((p, i) => (
-          <div
-            key={p.id}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 14,
-              padding: "14px 0",
-              borderBottom:
-                i < myProjects.length - 1 ? "1px solid #e1ecf8" : "none",
-            }}
-          >
-            <div style={{ flex: 1 }}>
-              <div style={{ display: "flex", gap: 8, marginBottom: 4 }}>
-                <SkillTag skill={p.skill} />
-                <ProjectStatusBadge status={p.status} />
+        {loading ? (
+          <p style={{ fontSize: 13.5, color: "#7a9ec0", padding: "10px 0" }}>
+            Loading your projects...
+          </p>
+        ) : myProjects.length === 0 ? (
+          <p style={{ fontSize: 13.5, color: "#7a9ec0", padding: "10px 0" }}>
+            No projects posted yet.
+          </p>
+        ) : (
+          myProjects.map((p, i) => (
+            <div
+              key={p.id || p._id}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 14,
+                padding: "14px 0",
+                borderBottom:
+                  i < myProjects.length - 1 ? "1px solid #e1ecf8" : "none",
+              }}
+            >
+              <div style={{ flex: 1 }}>
+                <div style={{ display: "flex", gap: 8, marginBottom: 4 }}>
+                  <SkillTag skill={p.skill || p.techStack?.[0] || "General"} />
+                  <ProjectStatusBadge status={p.status} />
+                </div>
+                <div style={{ fontSize: 14.5, fontWeight: 600 }}>{p.title}</div>
               </div>
-              <div style={{ fontSize: 14.5, fontWeight: 600 }}>{p.title}</div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </div>
   );

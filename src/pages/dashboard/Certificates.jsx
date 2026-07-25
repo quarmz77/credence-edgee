@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useUserStore } from "@/store/userStore";
 import { SkillTag } from "@/components/badge/RatingBadge";
 import RatingBadge from "@/components/badge/RatingBadge";
@@ -8,15 +8,65 @@ import toast from "react-hot-toast";
 import { Award } from "lucide-react";
 import useAuth from "@/hooks/useAuth";
 import { initializePayment, createPayment } from "@/services/paymentService";
+import { getCertificates } from "@/services/certificateService";
+import { getSubmissions } from "@/services/submissionService";
 
 const Certificates = () => {
   const { user } = useAuth();
-  const { certificateItems, markCertPaid } = useUserStore();
+  const { certificateItems, setCertificateItems, markCertPaid } = useUserStore();
   const [payModal, setPayModal] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [fetching, setFetching] = useState(true);
   const [method, setMethod] = useState("mtn");
 
   const eligible = certificateItems.filter((item) => item.certEligible);
+
+  useEffect(() => {
+    if (!user?.id) return;
+    const loadCertData = async () => {
+      try {
+        setFetching(true);
+        // Load student submissions
+        const subsResponse = await getSubmissions();
+        const subs = subsResponse?.items ?? [];
+        
+        // Filter submissions that are approved
+        const approvedSubs = subs.filter((s) => s.status === "approved");
+
+        // Load student issued certificates
+        const certsResponse = await getCertificates({ userId: user.id });
+        const certs = certsResponse?.items ?? [];
+
+        // Map approved submissions to certificate list item format
+        const items = approvedSubs.map((s) => {
+          const project = s.project || {};
+          const isPaid = certs.some(
+            (c) =>
+              (c.projectId?.id || c.projectId || "").toString() ===
+              (project.id || s.projectId || "").toString()
+          );
+
+          return {
+            id: project.id || s.projectId,
+            title: project.title || s.title,
+            skill: project.skill || "General",
+            company: project.company || "Credify",
+            rating: s.rating,
+            certEligible: true,
+            certPaid: isPaid,
+          };
+        });
+
+        setCertificateItems(items);
+      } catch (error) {
+        console.error("Failed to load certificate data", error);
+      } finally {
+        setFetching(false);
+      }
+    };
+
+    loadCertData();
+  }, [user?.id, setCertificateItems]);
 
   const handlePay = async () => {
     if (!payModal || !user?.email) {
@@ -150,7 +200,11 @@ const Certificates = () => {
         </div>
       </div>
 
-      {eligible.length === 0 ? (
+      {fetching ? (
+        <div style={{ padding: 32, textAlign: "center", color: "#4a6080" }}>
+          Loading your certificate status...
+        </div>
+      ) : eligible.length === 0 ? (
         <EmptyState
           icon={<Award size={52} />}
           title="No certificates yet"

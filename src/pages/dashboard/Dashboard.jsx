@@ -1,7 +1,9 @@
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useAuth from '@/hooks/useAuth'
 import useProjects from '@/hooks/useProjects'
 import { useUserStore } from '@/store/userStore'
+import { getCertificates } from '@/services/certificateService'
 import { SkillTag } from '@/components/badge/RatingBadge'
 import RatingBadge from '@/components/badge/RatingBadge'
 import { CheckCircle, FileText, FolderOpen } from 'lucide-react'
@@ -9,12 +11,23 @@ import { CheckCircle, FileText, FolderOpen } from 'lucide-react'
 const Dashboard = () => {
   const { user } = useAuth()
   const nav = useNavigate()
-  const { myProjects } = useProjects()
-  const { certificateItems } = useUserStore()
+  const { myProjects, submissionsLoading } = useProjects()
+  const { certificateItems, setCertificateItems } = useUserStore()
+  const [certsCount, setCertsCount] = useState(0)
+
+  useEffect(() => {
+    if (!user?.id) return
+    getCertificates({ userId: user.id })
+      .then((res) => {
+        const certs = res?.items ?? []
+        setCertsCount(certs.length)
+      })
+      .catch((err) => console.error("Failed to load dashboard certificates count", err))
+  }, [user?.id])
 
   const inProgress = myProjects.filter(p => p.status === 'In Progress').length
   const reviewed = myProjects.filter(p => p.status === 'Reviewed').length
-  const paidCertificates = certificateItems.filter(item => item.certPaid).length
+  const paidCertificates = certsCount
 
   return (
     <div className="animate-fade-up">
