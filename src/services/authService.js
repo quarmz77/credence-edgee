@@ -32,7 +32,23 @@ export const verifyEmail = async (token) => {
   return res.data;
 };
 
+export const resendVerification = async (data = {}) => {
+  const res = await API.post("/auth/resend-verification", data);
+  return res.data;
+};
+
+export const verifyOtp = async (data) => {
+  const res = await API.post("/auth/verify-otp", data);
+  return res.data;
+};
+
+export const resendOtp = async (data) => {
+  const res = await API.post("/auth/resend-otp", data);
+  return res.data;
+};
+
 export const updateProfile = async (data) => {
   const res = await API.put("/auth/profile", data);
   return res.data.data;
 };
+

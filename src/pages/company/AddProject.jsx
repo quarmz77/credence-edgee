@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { SKILLS } from '@/utils/constants'
 import toast from 'react-hot-toast'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, CalendarClock } from 'lucide-react'
 import { createProject } from '@/services/projectService'
 
 const AddProject = () => {
@@ -15,6 +15,7 @@ const AddProject = () => {
     instructions: '',
     duration: '',
     type: 'Remote',
+    deadline: '',
   })
 
   const set = (k) => (e) => setForm(p => ({ ...p, [k]: e.target.value }))
@@ -25,6 +26,16 @@ const AddProject = () => {
       toast.error('Please fill all required fields')
       return
     }
+
+    // Deadline must be a future date if provided
+    if (form.deadline) {
+      const dl = new Date(form.deadline)
+      if (dl <= new Date()) {
+        toast.error('Deadline must be a future date')
+        return
+      }
+    }
+
     setLoading(true)
     try {
       await createProject({
@@ -34,6 +45,7 @@ const AddProject = () => {
         instructions: form.instructions,
         duration: form.duration || 'Flexible',
         type: form.type,
+        deadline: form.deadline || null,
         // approvalStatus defaults to "pending" on the backend
       })
       toast.success('Project submitted to Credify for admin approval!')
@@ -44,6 +56,9 @@ const AddProject = () => {
       setLoading(false)
     }
   }
+
+  // Compute today's date in YYYY-MM-DD for the min attribute
+  const todayStr = new Date().toISOString().split('T')[0]
 
   return (
     <div className="animate-fade-up">
@@ -87,6 +102,31 @@ const AddProject = () => {
             </select>
           </div>
         </div>
+
+        {/* Deadline field */}
+        <div className="form-group">
+          <label className="form-label" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            <CalendarClock size={14} />
+            Submission Deadline
+            <span style={{ fontSize: 11, color: '#7a9ec0', fontWeight: 400, marginLeft: 4 }}>(optional — students cannot submit after this date)</span>
+          </label>
+          <input
+            className="form-input"
+            type="date"
+            min={todayStr}
+            value={form.deadline}
+            onChange={set('deadline')}
+          />
+          {form.deadline && (
+            <p style={{ fontSize: 12, color: '#7a9ec0', marginTop: 4 }}>
+              Students can start the project anytime but must submit by{' '}
+              <strong style={{ color: '#0d1f35' }}>
+                {new Date(form.deadline).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+              </strong>.
+            </p>
+          )}
+        </div>
+
         <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
           {loading ? 'Submitting…' : 'Submit to Credify for Approval →'}
         </button>
@@ -96,3 +136,4 @@ const AddProject = () => {
 }
 
 export default AddProject
+

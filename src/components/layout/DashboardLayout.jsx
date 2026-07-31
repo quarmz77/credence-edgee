@@ -2,6 +2,7 @@ import { Outlet, NavLink, useNavigate } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import useAuth from '@/hooks/useAuth'
 import toast from 'react-hot-toast'
+import EmailVerificationBanner from '@/components/common/EmailVerificationBanner'
 
 const DashboardTopBar = ({ role }) => {
   const { user, logout } = useAuth()
@@ -49,6 +50,7 @@ const DashboardLayout = ({ role = 'student' }) => (
     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
       <DashboardTopBar role={role} />
       <main className="dashboard-main" style={{ flex: 1, overflowY: 'auto' }}>
+        <EmailVerificationBanner />
         <Outlet />
       </main>
     </div>
@@ -56,3 +58,4 @@ const DashboardLayout = ({ role = 'student' }) => (
 )
 
 export default DashboardLayout
+

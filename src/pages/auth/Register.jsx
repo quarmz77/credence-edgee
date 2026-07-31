@@ -42,20 +42,16 @@ const Register = () => {
     if (!validate()) return
     setLoading(true)
     try {
-      await register({
+      const result = await register({
         ...form,
         role: type,
         name: type === 'company' ? form.companyName : form.name,
       })
-      toast.success('Welcome to Credify!')
-      if (type === 'company') nav('/company')
-      else if(type === 'admin') nav('/admin')
-      else nav('/student-dashboard')
+      // Registration returns { email, requiresOtp: true } — go to OTP verification page
+      const email = result?.email || form.email
+      toast.success('Account created! Check your email for a 6-digit verification code.', { duration: 6000 })
+      nav(`/verify-otp?email=${encodeURIComponent(email)}`)
     } catch (err) {
-    console.log(err);
-      console.log(err.response);
-      console.log(err.response?.data);
-
       toast.error(
         err.response?.data?.message || "Registration failed. Please try again."
       );

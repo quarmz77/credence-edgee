@@ -7,6 +7,7 @@ import { getCertificates } from '@/services/certificateService'
 import { SkillTag } from '@/components/badge/RatingBadge'
 import RatingBadge from '@/components/badge/RatingBadge'
 import { CheckCircle, FileText, FolderOpen } from 'lucide-react'
+import CountdownTimer from '@/components/common/CountdownTimer'
 
 const Dashboard = () => {
   const { user } = useAuth()
@@ -63,9 +64,12 @@ const Dashboard = () => {
           myProjects.slice(0, 3).map((p, i) => (
             <div key={p.id} style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '12px 0', borderBottom: i < 2 ? '1px solid #e1ecf8' : 'none' }}>
               <div style={{ flex: 1 }}>
-                <div style={{ display: 'flex', gap: 8, marginBottom: 4 }}>
+                <div style={{ display: 'flex', gap: 8, marginBottom: 4, alignItems: 'center', flexWrap: 'wrap' }}>
                   <SkillTag skill={p.skill} />
                   {p.rating && <RatingBadge rating={p.rating} />}
+                  {p.status === 'In Progress' && (
+                    <CountdownTimer deadline={p.deadline} createdAt={p.createdAt} duration={p.duration} />
+                  )}
                 </div>
                 <div style={{ fontSize: 14, fontWeight: 600, color: '#0d1f35' }}>{p.title}</div>
               </div>
