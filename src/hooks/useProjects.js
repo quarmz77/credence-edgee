@@ -1,6 +1,10 @@
 import { useEffect, useMemo, useCallback } from "react";
 import { getProjects } from "@/services/projectService";
-import { getSubmissions, createSubmission } from "@/services/submissionService";
+import {
+  getSubmissions,
+  createSubmission,
+  deleteSubmission,
+} from "@/services/submissionService";
 import { useProjectStore } from "@/store/projectStore";
 import useAuth from "@/hooks/useAuth";
 
@@ -45,7 +49,6 @@ const normalizeSubmission = (submission) => {
     duration: project.duration || "Flexible",
     type: project.type || "Remote",
     deadline: project.deadline || null,
-    // Map submission statuses to display statuses
     status: mapSubmissionStatus(submission.status),
     submissionStatus: submission.status,
     rating: submission.rating || null,
@@ -64,24 +67,22 @@ const normalizeSubmission = (submission) => {
       : null,
     createdAt: submission.createdAt,
     updatedAt: submission.updatedAt,
-    // Certificate eligibility: approved submission with a rating
     certEligible: submission.status === "approved" && !!submission.rating,
-    certPaid: false, // will be updated from certificates API
+    certPaid: false,
   };
 };
 
 const mapSubmissionStatus = (status) => {
   switch (status) {
+    case "ongoing":
+      return "In Progress";
     case "pending":
       return "Submitted";
     case "reviewing":
       return "In Review";
     case "approved":
-      return "Reviewed";
     case "rejected":
       return "Reviewed";
-    case "draft":
-      return "In Progress";
     default:
       return "In Progress";
   }
@@ -97,13 +98,13 @@ const useProjects = () => {
     filter,
     setFilter,
     addMyProject,
+    removeMyProject,
     setProjects,
     setMyProjects,
     setLoading,
     setSubmissionsLoading,
   } = useProjectStore();
 
-  // Load all approved public projects
   useEffect(() => {
     let isMounted = true;
 
@@ -121,10 +122,11 @@ const useProjects = () => {
     };
 
     loadProjects();
-    return () => { isMounted = false; };
+    return () => {
+      isMounted = false;
+    };
   }, [setLoading, setProjects]);
 
-  // Load current user's submissions as "my projects"
   useEffect(() => {
     if (!isAuthenticated || !user?.id) return;
 
@@ -134,7 +136,6 @@ const useProjects = () => {
       setSubmissionsLoading(true);
       try {
         const data = await getSubmissions();
-        // data = { items: [...], pagination: {...} }
         const items = data?.items ?? [];
         if (isMounted) setMyProjects(items.map(normalizeSubmission));
       } catch (error) {
@@ -145,7 +146,9 @@ const useProjects = () => {
     };
 
     loadMyProjects();
-    return () => { isMounted = false; };
+    return () => {
+      isMounted = false;
+    };
   }, [isAuthenticated, user?.id, setMyProjects, setSubmissionsLoading]);
 
   const filtered = useMemo(() => {
@@ -160,31 +163,50 @@ const useProjects = () => {
     });
   }, [filter, projects]);
 
-  // Start a project: create a real submission record in the DB with empty content.
-  // The student fills in their work later via the "Submit Work" modal.
-  const startProject = useCallback(async (project) => {
-    const already = myProjects.find(
-      (entry) => entry.projectId === project.id || entry.projectId === project._id
-    );
-    if (already) return { already: true };
+  // Start a project: create a real submission record in the DB, status defaults to "ongoing".
+  const startProject = useCallback(
+    async (project) => {
+      const already = myProjects.find(
+        (entry) =>
+          entry.projectId === project.id || entry.projectId === project._id,
+      );
+      if (already) return { already: true };
 
-    try {
-      const submission = await createSubmission({
-        projectId: project.id,
-        title: project.title,
-        content: "",
-        attachments: [],
-      });
+      try {
+        const submission = await createSubmission({
+          projectId: project.id,
+          title: project.title,
+          content: "",
+          attachments: [],
+        });
 
-      addMyProject(normalizeSubmission(submission));
-      return { success: true };
-    } catch (error) {
-      // 409 = already started — treat as success
-      if (error?.response?.status === 409) return { already: true };
-      return { error: error?.response?.data?.message || "Failed to start project." };
-    }
-  }, [myProjects, addMyProject]);
+        addMyProject(normalizeSubmission(submission));
+        return { success: true };
+      } catch (error) {
+        if (error?.response?.status === 409) return { already: true };
+        return {
+          error: error?.response?.data?.message || "Failed to start project.",
+        };
+      }
+    },
+    [myProjects, addMyProject],
+  );
 
+  // Remove an ongoing project the student decided not to pursue.
+  const removeProject = useCallback(
+    async (submissionId) => {
+      try {
+        await deleteSubmission(submissionId);
+        removeMyProject(submissionId);
+        return { success: true };
+      } catch (error) {
+        return {
+          error: error?.response?.data?.message || "Failed to remove project.",
+        };
+      }
+    },
+    [removeMyProject],
+  );
 
   return {
     projects,
@@ -195,6 +217,7 @@ const useProjects = () => {
     filter,
     setFilter,
     startProject,
+    removeProject,
   };
 };
 
