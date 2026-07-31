@@ -27,6 +27,9 @@ import MyProjects from "@/pages/dashboard/MyProjects";
 import MySubmissions from "@/pages/dashboard/MySubmissions";
 import Certificates from "@/pages/dashboard/Certificates";
 import Profile from "@/pages/dashboard/Profile";
+import SkillPassport from "@/pages/dashboard/SkillPassport";
+import TaskMarketplace from "@/pages/dashboard/TaskMarketplace";
+import CvCredentials from "@/pages/dashboard/CvCredentials";
 
 import CompanyDashboard from "@/pages/company/CompanyDashboard";
 import CompanyProjects from "@/pages/company/CompanyProjects";
@@ -105,6 +108,9 @@ const AppRoutes = () => (
       <Route path="submissions" element={<MySubmissions />} />
       <Route path="certificates" element={<Certificates />} />
       <Route path="profile" element={<Profile />} />
+      <Route path="skill-passport" element={<SkillPassport />} />
+      <Route path="task-marketplace" element={<TaskMarketplace />} />
+      <Route path="cv-credentials" element={<CvCredentials />} />
     </Route>
 
     <Route

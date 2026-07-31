@@ -2,14 +2,17 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import useAuth from '@/hooks/useAuth'
 import Logo from './Logo'
 import toast from 'react-hot-toast'
-import { LayoutDashboard, FolderOpen, Upload, Award, FileText, User, LogOut, Plus, Users, CheckSquare, Building2 } from 'lucide-react'
+import { LayoutDashboard, FolderOpen, Upload, Award, FileText, User, LogOut, Plus, Users, CheckSquare, Building2, ShoppingBag, ListChecks } from 'lucide-react'
 
 const STUDENT_LINKS = [
-  { to: '/student-dashboard',              label: 'Overview',     icon: LayoutDashboard, end: true },
-  { to: '/student-dashboard/projects',     label: 'My Projects',  icon: FolderOpen },
-  { to: '/student-dashboard/submissions',  label: 'Submissions',  icon: Upload },
-  { to: '/student-dashboard/certificates', label: 'Certificates', icon: FileText },
-  { to: '/student-dashboard/profile',      label: 'Profile',      icon: User },
+  { to: '/student-dashboard',              label: 'Overview',        icon: LayoutDashboard, end: true },
+  { to: '/student-dashboard/projects',     label: 'My Projects',     icon: FolderOpen },
+  { to: '/student-dashboard/submissions',  label: 'Submissions',     icon: Upload },
+  { to: '/student-dashboard/certificates', label: 'Certificates',    icon: FileText },
+  { to: '/student-dashboard/skill-passport', label: 'Skill Passport', icon: Award },
+  { to: '/student-dashboard/task-marketplace', label: 'Task Marketplace', icon: ShoppingBag },
+  { to: '/student-dashboard/cv-credentials', label: 'CV & Credentials', icon: ListChecks },
+  { to: '/student-dashboard/profile',      label: 'Profile',         icon: User },
 ]
 
 const COMPANY_LINKS = [
