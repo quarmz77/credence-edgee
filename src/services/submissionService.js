@@ -15,6 +15,11 @@ export const createSubmission = async (data) => {
   return response.data.data;
 };
 
+export const updateSubmission = async (submissionId, data) => {
+  const response = await API.patch(`/submissions/${submissionId}`, data);
+  return response.data.data;
+};
+
 export const updateSubmissionStatus = async (submissionId, data) => {
   const response = await API.patch(`/submissions/${submissionId}/status`, data);
   return response.data.data;

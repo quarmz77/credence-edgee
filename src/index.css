@@ -98,3 +98,29 @@ input, select, textarea { font-family: inherit; }
 .auth-form { display:flex; flex-direction:column; gap:16px; }
 .auth-footer-text { text-align:center; font-size:13.5px; color:#4a6080; }
 .auth-footer-link { color:#1565c0; font-weight:700; background:none; border:none; cursor:pointer; font-size:13.5px; }
+
+.fade-in {
+  animation: fadeIn 200ms ease-in;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (max-width: 768px) {
+
+  .auth-layout {
+    flex-direction: column;
+  }
+
+  .auth-left {
+    padding: 40px 24px;
+    min-height: 300px;
+  }
+
+  .auth-right {
+    width: 100%;
+    padding: 24px;
+  }
+
+}

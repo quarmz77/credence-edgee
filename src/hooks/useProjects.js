@@ -49,6 +49,9 @@ const normalizeSubmission = (submission) => {
     rating: submission.rating || null,
     feedback: submission.feedback || submission.reviewerNotes || null,
     content: submission.content || "",
+    githubRepoUrl: submission.githubRepoUrl || "",
+    zipFileUrl: submission.zipFileUrl || "",
+    zipFileName: submission.zipFileName || "",
     attachments: submission.attachments || [],
     submittedAt: submission.createdAt
       ? new Date(submission.createdAt).toLocaleDateString("en-GB", {
@@ -75,6 +78,8 @@ const mapSubmissionStatus = (status) => {
       return "Reviewed";
     case "rejected":
       return "Reviewed";
+    case "draft":
+      return "In Progress";
     default:
       return "In Progress";
   }

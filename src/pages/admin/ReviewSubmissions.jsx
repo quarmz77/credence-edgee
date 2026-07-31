@@ -76,6 +76,37 @@ const ReviewSubmissions = () => {
               >
                 <User size={12} /> {s.userId?.name}
               </p>
+              {(s.githubRepoUrl || s.zipFileUrl) && (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 6,
+                    marginBottom: 12,
+                  }}
+                >
+                  {s.githubRepoUrl && (
+                    <a
+                      href={s.githubRepoUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{ color: "#0d6efd", fontSize: 13 }}
+                    >
+                      GitHub Repository
+                    </a>
+                  )}
+                  {s.zipFileUrl && (
+                    <a
+                      href={s.zipFileUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{ color: "#0d6efd", fontSize: 13 }}
+                    >
+                      {s.zipFileName || "Zip Archive"}
+                    </a>
+                  )}
+                </div>
+              )}
               <div style={{ display: "flex", gap: 8 }}>
                 <button
                   className="btn btn-sm"

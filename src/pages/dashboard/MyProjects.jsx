@@ -7,13 +7,19 @@ import EmptyState from "@/components/common/EmptyState";
 import Modal from "@/components/common/Modal";
 import toast from "react-hot-toast";
 import { Building, Pin, UploadCloud } from "lucide-react";
-import { createSubmission } from "@/services/submissionService";
+import { createSubmission, updateSubmission } from "@/services/submissionService";
 
 const MyProjects = () => {
   const { myProjects, submissionsLoading, setMyProjects } = useProjects();
   const [filter, setFilter] = useState("All");
   const [submitModal, setSubmitModal] = useState(null); // project to submit
-  const [submitForm, setSubmitForm] = useState({ title: "", content: "", attachments: "" });
+  const [submitForm, setSubmitForm] = useState({
+    title: "",
+    content: "",
+    githubRepoUrl: "",
+    zipFileUrl: "",
+    attachments: "",
+  });
   const [submitting, setSubmitting] = useState(false);
   const nav = useNavigate();
 
@@ -24,7 +30,13 @@ const MyProjects = () => {
       : myProjects.filter((p) => p.status === filter);
 
   const openSubmitModal = (project) => {
-    setSubmitForm({ title: project.title, content: "", attachments: "" });
+    setSubmitForm({
+      title: project.title,
+      content: project.content || "",
+      githubRepoUrl: project.githubRepoUrl || "",
+      zipFileUrl: project.zipFileUrl || "",
+      attachments: (project.attachments || []).join(", "),
+    });
     setSubmitModal(project);
   };
 
@@ -34,8 +46,14 @@ const MyProjects = () => {
       toast.error("Cannot submit — project ID is missing. Please reload the page.");
       return;
     }
-    if (!submitForm.content.trim()) {
-      toast.error("Please describe your work before submitting.");
+
+    const hasWorkProvided =
+      submitForm.content.trim() ||
+      submitForm.githubRepoUrl.trim() ||
+      submitForm.zipFileUrl.trim();
+
+    if (!hasWorkProvided) {
+      toast.error("Please provide a description, GitHub repo, or zip folder link before submitting.");
       return;
     }
 
@@ -46,12 +64,24 @@ const MyProjects = () => {
         .map((a) => a.trim())
         .filter(Boolean);
 
-      await createSubmission({
-        projectId: submitModal.projectId,
-        title: submitForm.title || submitModal.title,
-        content: submitForm.content,
-        attachments: attachmentsList,
-      });
+      if (submitModal.submissionId) {
+        await updateSubmission(submitModal.submissionId, {
+          title: submitForm.title || submitModal.title,
+          content: submitForm.content,
+          githubRepoUrl: submitForm.githubRepoUrl,
+          zipFileUrl: submitForm.zipFileUrl,
+          attachments: attachmentsList,
+        });
+      } else {
+        await createSubmission({
+          projectId: submitModal.projectId,
+          title: submitForm.title || submitModal.title,
+          content: submitForm.content,
+          githubRepoUrl: submitForm.githubRepoUrl,
+          zipFileUrl: submitForm.zipFileUrl,
+          attachments: attachmentsList,
+        });
+      }
 
       toast.success(`Work submitted for "${submitModal.title}" on Credify!`);
       setSubmitModal(null);
@@ -244,12 +274,30 @@ const MyProjects = () => {
               />
             </div>
             <div className="form-group">
-              <label className="form-label">Links / Attachments (comma-separated)</label>
+              <label className="form-label">GitHub Repository URL</label>
+              <input
+                className="form-input"
+                value={submitForm.githubRepoUrl}
+                onChange={(e) => setSubmitForm((f) => ({ ...f, githubRepoUrl: e.target.value }))}
+                placeholder="https://github.com/username/repo"
+              />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Zip Folder / Archive URL</label>
+              <input
+                className="form-input"
+                value={submitForm.zipFileUrl}
+                onChange={(e) => setSubmitForm((f) => ({ ...f, zipFileUrl: e.target.value }))}
+                placeholder="https://drive.google.com/... or https://dropbox.com/..."
+              />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Additional Links / Attachments (comma-separated)</label>
               <input
                 className="form-input"
                 value={submitForm.attachments}
                 onChange={(e) => setSubmitForm((f) => ({ ...f, attachments: e.target.value }))}
-                placeholder="https://github.com/..., https://drive.google.com/..."
+                placeholder="https://example.com/demo, https://docs.example.com/..."
               />
             </div>
           </div>

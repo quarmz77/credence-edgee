@@ -74,6 +74,37 @@ const MySubmissions = () => {
               >
                 <Building size={12} /> {p.company} {p.submittedAt ? `· Submitted ${p.submittedAt}` : ""}
               </p>
+              {(p.githubRepoUrl || p.zipFileUrl) && (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 6,
+                    marginBottom: 10,
+                  }}
+                >
+                  {p.githubRepoUrl && (
+                    <a
+                      href={p.githubRepoUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{ color: "#0d6efd", fontSize: 13 }}
+                    >
+                      GitHub Repository
+                    </a>
+                  )}
+                  {p.zipFileUrl && (
+                    <a
+                      href={p.zipFileUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{ color: "#0d6efd", fontSize: 13 }}
+                    >
+                      {p.zipFileName || "Zip Archive"}
+                    </a>
+                  )}
+                </div>
+              )}
               {p.feedback && (
                 <div
                   style={{
