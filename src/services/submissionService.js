@@ -24,3 +24,9 @@ export const updateSubmissionStatus = async (submissionId, data) => {
   const response = await API.patch(`/submissions/${submissionId}/status`, data);
   return response.data.data;
 };
+
+export const rateSubmission = async (submissionId, { rating, comment }) => {
+  const response = await API.post(`/submissions/${submissionId}/rate`, { rating, comment });
+  return response.data.data;
+};
+

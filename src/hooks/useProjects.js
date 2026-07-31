@@ -25,6 +25,7 @@ const normalizeProject = (project) => {
     repositoryUrl: project.repositoryUrl || "",
     liveUrl: project.liveUrl || "",
     company: project.company || "Credify",
+    deadline: project.deadline || null,
     createdAt: project.createdAt,
     updatedAt: project.updatedAt,
   };
@@ -43,6 +44,7 @@ const normalizeSubmission = (submission) => {
     company: project.company || "Credify",
     duration: project.duration || "Flexible",
     type: project.type || "Remote",
+    deadline: project.deadline || null,
     // Map submission statuses to display statuses
     status: mapSubmissionStatus(submission.status),
     submissionStatus: submission.status,

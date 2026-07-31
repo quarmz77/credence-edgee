@@ -48,19 +48,16 @@ export function AuthProvider({ children }) {
 
   const register = useCallback(async (data) => {
     const response = await registerUser(data)
-    // authService.registerUser returns res.data.data → { accessToken, user }
-    const { accessToken, user } = response
+    // After the OTP flow: registerUser returns { email, requiresOtp: true }
+    // Do NOT set user/token yet — the user must verify OTP first
+    return response
+  }, [])
 
-    setUser(user)
+  const loginWithToken = useCallback((accessToken, userData) => {
+    setUser(userData)
     setToken(accessToken)
-
-    localStorage.setItem('ce_user', JSON.stringify(user))
+    localStorage.setItem('ce_user', JSON.stringify(userData))
     localStorage.setItem('ce_token', accessToken)
-
-    return {
-      success: true,
-      role: user.role || 'user',
-    }
   }, [])
 
   const logout = useCallback(() => {
@@ -87,6 +84,7 @@ export function AuthProvider({ children }) {
         loading,
         login,
         register,
+        loginWithToken,
         logout,
         updateUser,
         isAuthenticated: !!user,

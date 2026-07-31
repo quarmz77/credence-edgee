@@ -13,10 +13,11 @@ const STUDENT_LINKS = [
 ]
 
 const COMPANY_LINKS = [
-  { to: '/company',              label: 'Overview',        icon: LayoutDashboard, end: true },
-  { to: '/company/projects',     label: 'My Projects',     icon: FolderOpen },
-  { to: '/company/projects/add', label: 'Add Project',     icon: Plus },
-  { to: '/company/profile',      label: 'Company Profile', icon: Building2 },
+  { to: '/company',               label: 'Overview',            icon: LayoutDashboard, end: true },
+  { to: '/company/projects',      label: 'My Projects',         icon: FolderOpen },
+  { to: '/company/projects/add',  label: 'Add Project',         icon: Plus },
+  { to: '/company/submissions',   label: 'Review Submissions',  icon: CheckSquare },
+  { to: '/company/profile',       label: 'Company Profile',     icon: Building2 },
 ]
 
 const ADMIN_LINKS = [

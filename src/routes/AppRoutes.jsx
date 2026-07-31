@@ -20,6 +20,7 @@ import Register from "@/pages/auth/Register";
 import ForgotPassword from "@/pages/auth/ForgotPassword";
 import ResetPassword from "@/pages/auth/ResetPassword";
 import VerifyEmail from "@/pages/auth/VerifyEmail";
+import VerifyOtp from "@/pages/auth/VerifyOtp";
 
 import Dashboard from "@/pages/dashboard/Dashboard";
 import MyProjects from "@/pages/dashboard/MyProjects";
@@ -31,6 +32,7 @@ import CompanyDashboard from "@/pages/company/CompanyDashboard";
 import CompanyProjects from "@/pages/company/CompanyProjects";
 import AddProject from "@/pages/company/AddProject";
 import CompanyProfile from "@/pages/company/CompanyProfile";
+import CompanySubmissions from "@/pages/company/CompanySubmissions";
 
 import AdminDashboard from "@/pages/admin/AdminDashboard";
 import ManageProjects from "@/pages/admin/ManageProjects";
@@ -76,6 +78,7 @@ const AppRoutes = () => (
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/verify-email" element={<VerifyEmail />} />
+      <Route path="/verify-otp" element={<VerifyOtp />} />
     </Route>
 
     <Route
@@ -117,6 +120,7 @@ const AppRoutes = () => (
       <Route index element={<CompanyDashboard />} />
       <Route path="projects" element={<CompanyProjects />} />
       <Route path="projects/add" element={<AddProject />} />
+      <Route path="submissions" element={<CompanySubmissions />} />
       <Route path="profile" element={<CompanyProfile />} />
     </Route>
 
