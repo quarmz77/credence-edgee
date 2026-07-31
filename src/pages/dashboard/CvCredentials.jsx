@@ -64,14 +64,14 @@ const CvCredentials = () => {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 14 }}>
             <div className="card" style={{ padding: 16, background: '#f8fbff' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-                <ListDetails size={16} />
+                <ListChecks size={16} />
                 <span style={{ fontWeight: 700 }}>Top Skill</span>
               </div>
               <p style={{ margin: 0, color: '#4a6080' }}>{completedProjects[0]?.skill || 'No skill yet'}</p>
             </div>
             <div className="card" style={{ padding: 16, background: '#f8fbff' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-                <ListDetails size={16} />
+                <ListChecks size={16} />
                 <span style={{ fontWeight: 700 }}>Latest Credential</span>
               </div>
               <p style={{ margin: 0, color: '#4a6080' }}>{certificates[0]?.title || 'No credential yet'}</p>
