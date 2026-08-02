@@ -52,3 +52,12 @@ export const updateProfile = async (data) => {
   return res.data.data;
 };
 
+export const changePassword = async (data) => {
+  const res = await API.put("/auth/change-password", data);
+  return res.data;
+};
+
+export const logoutUser = async () => {
+  const res = await API.post("/auth/logout");
+  return res.data;
+};

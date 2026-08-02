@@ -4,12 +4,12 @@ import Logo from "@/components/layout/Logo";
 import toast from "react-hot-toast";
 import { ShieldCheck, RefreshCw, ArrowLeft, Mail } from "lucide-react";
 import { verifyOtp, resendOtp } from "@/services/authService";
-import useAuth from "@/hooks/useAuth";
+import { useAuthContext } from "@/context/AuthContext";
 
 const VerifyOtp = () => {
   const [searchParams] = useSearchParams();
   const nav = useNavigate();
-  const { loginWithToken } = useAuth();
+  const { setUser } = useAuthContext();
   const email = searchParams.get("email") || "";
 
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -83,8 +83,9 @@ const VerifyOtp = () => {
     setError("");
     try {
       const res = await verifyOtp({ email, otp: code || otp.join("") });
-      const { accessToken, user } = res.data;  // res = { success, message, data: { accessToken, user } }
-      loginWithToken(accessToken, user);
+      // Token is set as an httpOnly cookie by the server — never touches JS
+      const user = res.data?.user;
+      setUser(user);
       toast.success("Email verified! Welcome to Credify 🎉");
 
       // Route by role
