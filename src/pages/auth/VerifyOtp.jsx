@@ -86,7 +86,7 @@ const VerifyOtp = () => {
       // Token is set as an httpOnly cookie by the server — never touches JS
       const user = res.data?.user;
       setUser(user);
-      toast.success("Email verified! Welcome to Credify 🎉");
+      toast.success("Email verified! Welcome to Credify");
 
       // Route by role
       if (user.role === "company") nav("/company");
