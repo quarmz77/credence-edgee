@@ -126,66 +126,70 @@ const VerifyOtp = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "linear-gradient(135deg, #f0f7ff 0%, #e8f4fe 100%)",
+        background: "#f8fafc",
         padding: 20,
       }}
     >
       <div
+        className="card animate-scale-in"
         style={{
           width: "100%",
           maxWidth: 460,
           background: "#ffffff",
           borderRadius: 20,
           padding: "44px 40px",
-          boxShadow: "0 8px 40px rgba(21,101,192,0.10), 0 1px 0 rgba(0,0,0,0.04)",
-          border: "1px solid #e1ecf8",
+          boxShadow: "0 6px 30px rgba(2,44,34,0.06), 0 1px 3px rgba(0,0,0,0.02)",
+          border: "1px solid #e2e8f0",
         }}
       >
         {/* Logo */}
-        <div style={{ marginBottom: 28, display: "flex", justifyContent: "center" }}>
+        <div style={{ marginBottom: 28, display: "flex", justifyContent: "center" }} className="animate-scale-in">
           <Logo size={32} />
         </div>
 
         {/* Icon + Title */}
         <div style={{ textAlign: "center", marginBottom: 32 }}>
           <div
+            className="animate-scale-in animate-pulse-green"
             style={{
               width: 72,
               height: 72,
               borderRadius: "50%",
-              background: "linear-gradient(135deg, #0f3460, #1565c0)",
+              background: "#022c22",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               margin: "0 auto 18px",
-              boxShadow: "0 4px 20px rgba(21,101,192,0.30)",
+              boxShadow: "0 4px 16px rgba(5,150,105,0.25)",
             }}
           >
             <ShieldCheck size={34} color="#ffffff" />
           </div>
           <h1
+            className="animate-slide-up delay-100"
             style={{
-              fontFamily: "'Clash Display', sans-serif",
+              fontFamily: "'Plus Jakarta Sans', sans-serif",
               fontSize: 24,
               fontWeight: 700,
-              color: "#0d1f35",
+              color: "#0f172a",
               marginBottom: 8,
             }}
           >
             Verify Your Email
           </h1>
-          <p style={{ fontSize: 14, color: "#4a6080", lineHeight: 1.6 }}>
+          <p className="animate-slide-up delay-100" style={{ fontSize: 14, color: "#475569", lineHeight: 1.6 }}>
             We sent a 6-digit code to
           </p>
           <p
+            className="animate-slide-up delay-200"
             style={{
               display: "inline-flex",
               alignItems: "center",
               gap: 6,
               fontSize: 14,
               fontWeight: 700,
-              color: "#1565c0",
-              background: "#e8f4fe",
+              color: "#059669",
+              background: "#ecfdf5",
               padding: "4px 12px",
               borderRadius: 20,
               marginTop: 4,
@@ -214,6 +218,7 @@ const VerifyOtp = () => {
               inputMode="numeric"
               maxLength={1}
               value={digit}
+              className={`animate-slide-up delay-${(i + 1) * 100}`}
               onChange={(e) => handleChange(i, e.target.value)}
               onKeyDown={(e) => handleKeyDown(i, e)}
               style={{
@@ -223,20 +228,20 @@ const VerifyOtp = () => {
                 fontSize: 26,
                 fontWeight: 800,
                 fontFamily: "monospace",
-                color: "#0d1f35",
-                background: digit ? "#e8f4fe" : "#f8faff",
-                border: `2px solid ${error ? "#ef4444" : digit ? "#1565c0" : "#d1e3f8"}`,
+                color: "#0f172a",
+                background: digit ? "#ecfdf5" : "#f8fafc",
+                border: `2px solid ${error ? "#ef4444" : digit ? "#059669" : "#cbd5e1"}`,
                 borderRadius: 12,
                 outline: "none",
-                transition: "border-color 0.15s, background 0.15s, transform 0.1s",
+                transition: "all 0.15s ease",
                 cursor: "text",
                 caretColor: "transparent",
               }}
               onFocus={(e) =>
-                (e.target.style.border = `2px solid ${error ? "#ef4444" : "#1565c0"}`)
+                (e.target.style.border = `2px solid ${error ? "#ef4444" : "#059669"}`)
               }
               onBlur={(e) =>
-                (e.target.style.border = `2px solid ${error ? "#ef4444" : digit ? "#1565c0" : "#d1e3f8"}`)
+                (e.target.style.border = `2px solid ${error ? "#ef4444" : digit ? "#059669" : "#cbd5e1"}`)
               }
             />
           ))}
@@ -245,6 +250,7 @@ const VerifyOtp = () => {
         {/* Error */}
         {error && (
           <p
+            className="animate-slide-up"
             style={{
               textAlign: "center",
               color: "#dc2626",
@@ -259,7 +265,7 @@ const VerifyOtp = () => {
 
         {/* Verify Button */}
         <button
-          className="btn btn-primary btn-block"
+          className="btn btn-primary btn-block animate-slide-up delay-400"
           style={{
             padding: "13px",
             fontSize: 15,
@@ -281,8 +287,8 @@ const VerifyOtp = () => {
         </button>
 
         {/* Resend */}
-        <div style={{ textAlign: "center" }}>
-          <p style={{ fontSize: 13.5, color: "#7a9ec0", marginBottom: 8 }}>
+        <div style={{ textAlign: "center" }} className="animate-slide-up delay-500">
+          <p style={{ fontSize: 13.5, color: "#64748b", marginBottom: 8 }}>
             Didn't receive the code?
           </p>
           <button
@@ -292,7 +298,7 @@ const VerifyOtp = () => {
               background: "none",
               border: "none",
               cursor: cooldown > 0 ? "default" : "pointer",
-              color: cooldown > 0 ? "#94a3b8" : "#1565c0",
+              color: cooldown > 0 ? "#94a3b8" : "#059669",
               fontWeight: 600,
               fontSize: 13.5,
               display: "inline-flex",
@@ -324,7 +330,7 @@ const VerifyOtp = () => {
               background: "none",
               border: "none",
               cursor: "pointer",
-              color: "#7a9ec0",
+              color: "#64748b",
               fontSize: 13,
             }}
           >

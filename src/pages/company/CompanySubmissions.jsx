@@ -16,7 +16,7 @@ import {
 
 const STATUS_PILL = {
   pending:   { bg: "#fef9c3", color: "#854d0e",  label: "Pending" },
-  reviewing: { bg: "#dbeafe", color: "#1e40af",  label: "In Review" },
+  reviewing: { bg: "#ecfdf5", color: "#065f46",  label: "In Review" },
   approved:  { bg: "#dcfce7", color: "#166534",  label: "Approved" },
   rejected:  { bg: "#fee2e2", color: "#991b1b",  label: "Rejected" },
 };

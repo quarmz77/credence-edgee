@@ -36,7 +36,7 @@ const AdminDashboard = () => {
           label: "Total Users",
           value: overview.totals.users,
           icon: <Users size={20} />,
-          grad: "linear-gradient(135deg,#1565c0,#42a5f5)",
+          grad: "#059669",
         },
         {
           label: "Total Payments",

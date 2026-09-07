@@ -16,17 +16,19 @@ import {
   Building2,
   MapPin,
   Clock,
+  Award,
+  ArrowRight,
 } from "lucide-react";
 
-const GRAD_HERO = "linear-gradient(135deg,#0a1628 0%,#0a3d2a 50%,#0d2040 100%)";
-const GRAD_BTN = "linear-gradient(135deg,#1565c0 0%,#10a070 100%)";
+const FLAT_HERO_BG = "#022c22";
+const FLAT_ACCENT = "#059669";
 
 const HOW_IT_WORKS = [
   [
     "01",
     <User size={24} />,
     "Sign Up & Build Profile",
-    "Create your Credify profile with your university, skills and interests.",
+    "Create your Credify profile with your university, skills, and interests.",
   ],
   [
     "02",
@@ -38,7 +40,7 @@ const HOW_IT_WORKS = [
     "03",
     <Bookmark size={24} />,
     "Pick a Project",
-    "Browse real micro-projects from verified companies. Your selection stays completely private on Credify.",
+    "Browse real micro-projects from verified companies. Your selection stays completely private.",
   ],
   [
     "04",
@@ -50,13 +52,13 @@ const HOW_IT_WORKS = [
     "05",
     <Star size={24} />,
     "Get Rated",
-    "Receive a green, yellow, or red performance rating with written feedback from a Credify reviewer.",
+    "Receive a performance rating with written feedback from a reviewer.",
   ],
   [
     "06",
     <FileText size={24} />,
     "Get Your Certificate",
-    "Pay GHS 20 for a verified Credify certificate with a unique shareable ID.",
+    "Request a verified Credify certificate with a unique shareable ID.",
   ],
   [
     "07",
@@ -74,40 +76,25 @@ const FEATURES = [
   ],
   [
     <FileText size={30} />,
-    "Paid Certificates",
-    "Pay GHS 20 for a verified Credify certificate with a unique ID — proof you can share with employers.",
+    "Verified Certificates",
+    "Obtain a verified Credify certificate with a unique ID — proof you can share directly with employers.",
   ],
   [
     <Cpu size={30} />,
-    "AI-Powered Projects",
-    "Companies upload briefs and our AI auto-extracts details. Credify projects are always up to date.",
+    "Structured Project Briefs",
+    "Companies post structured briefs and requirements. Credify projects reflect real workplace requirements.",
   ],
   [
     <Building2 size={30} />,
     "Real Company Projects",
-    "All Credify projects are posted by verified companies and approved by admin before going live.",
+    "All Credify projects are posted by verified companies and reviewed before going live.",
   ],
   [
     <Star size={30} />,
     "Reviewer Feedback",
-    "Students receive private ratings and written feedback on submitted project work.",
+    "Students receive constructive ratings and written feedback on submitted project work.",
   ],
 ];
-
-const Blob = ({ left, top, size, color }) => (
-  <div
-    style={{
-      position: "absolute",
-      left,
-      top,
-      width: size,
-      height: size,
-      borderRadius: "50%",
-      background: color,
-      pointerEvents: "none",
-    }}
-  />
-);
 
 const Home = () => {
   const nav = useNavigate();
@@ -120,20 +107,15 @@ const Home = () => {
     <div>
       <section
         style={{
-          background: GRAD_HERO,
-          minHeight: "88vh",
+          background: FLAT_HERO_BG,
+          minHeight: "80vh",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          padding: "80px 40px",
+          padding: "70px 40px",
           position: "relative",
-          overflow: "hidden",
         }}
       >
-        <Blob left="-8%" top="-18%" size={580} color="rgba(21,101,192,0.12)" />
-        <Blob left="55%" top="20%" size={420} color="rgba(13,122,82,0.10)" />
-        <Blob left="78%" top="60%" size={280} color="rgba(66,165,245,0.08)" />
-
         <div
           style={{
             maxWidth: 780,
@@ -141,52 +123,57 @@ const Home = () => {
             position: "relative",
             zIndex: 1,
           }}
-          className="animate-fade-up"
         >
           <div
             style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: 8,
-              background: "rgba(255,255,255,0.08)",
-              border: "1px solid rgba(255,255,255,0.14)",
-              borderRadius: 20,
-              padding: "6px 18px",
+              gap: 10,
+              background: "#064e3b",
+              border: "1px solid #047857",
+              borderLeft: "3px solid #34d399",
+              borderRadius: 6,
+              padding: "7px 16px",
               marginBottom: 30,
             }}
           >
             <span
               style={{
-                width: 8,
-                height: 8,
-                borderRadius: "50%",
-                background: "#4dd9a8",
-                display: "inline-block",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 5,
+                background: "#059669",
+                color: "#fff",
+                fontSize: 11,
+                fontWeight: 800,
+                letterSpacing: "0.6px",
+                padding: "2px 7px",
+                borderRadius: 4,
+                textTransform: "uppercase",
               }}
-            />
-            <span style={{ color: "#a7f3d8", fontSize: 13, fontWeight: 600 }}>
-              Credify is live in Ghana · Build. Prove. Get Hired.
+            >
+              <ShieldCheck size={13} /> Verified
+            </span>
+            <span style={{ color: "#a7f3d0", fontSize: 13, fontWeight: 600 }}>
+              Official Student Skill Attestation & Project Platform
             </span>
           </div>
 
           <h1
             style={{
-              fontFamily: "'Clash Display',sans-serif",
-              fontSize: 62,
-              fontWeight: 700,
-              lineHeight: 1.08,
+              fontFamily: "'Plus Jakarta Sans',sans-serif",
+              fontSize: 56,
+              fontWeight: 800,
+              lineHeight: 1.1,
               color: "#fff",
-              marginBottom: 24,
-              letterSpacing: "-1.5px",
+              marginBottom: 20,
+              letterSpacing: "-1px",
             }}
           >
             Turn Real Projects Into{" "}
             <span
               style={{
-                background: "linear-gradient(90deg,#4dd9a8,#90caf9)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
+                color: "#34d399",
               }}
             >
               Verified Credentials
@@ -195,16 +182,15 @@ const Home = () => {
 
           <p
             style={{
-              color: "rgba(163,230,208,0.85)",
-              fontSize: 18,
-              lineHeight: 1.75,
-              maxWidth: 560,
-              margin: "0 auto 44px",
+              color: "#a7f3d0",
+              fontSize: 17,
+              lineHeight: 1.7,
+              maxWidth: 580,
+              margin: "0 auto 40px",
+              opacity: 0.9,
             }}
           >
-            Credify connects African students to real micro-projects from
-            companies. Complete work, get rated, and pay for verified
-            certificates — all in one private, skills-first platform.
+            Credify connects students with practical micro-projects from verified companies. Complete work, receive structured reviews, and earn shareable certificates.
           </p>
 
           <div
@@ -217,27 +203,26 @@ const Home = () => {
           >
             <button
               style={{
-                background: GRAD_BTN,
+                background: FLAT_ACCENT,
                 color: "#fff",
                 border: "none",
-                borderRadius: 12,
-                padding: "14px 38px",
-                fontSize: 16,
+                borderRadius: 8,
+                padding: "13px 32px",
+                fontSize: 15,
                 fontWeight: 700,
                 cursor: "pointer",
-                boxShadow: "0 8px 28px rgba(21,101,192,0.35)",
               }}
               onClick={() => nav("/register")}
             >
-              Join Credify Free →
+              Join Credify Free
             </button>
             <button
               style={{
                 background: "transparent",
                 color: "#fff",
-                border: "1.5px solid rgba(255,255,255,0.28)",
-                borderRadius: 12,
-                padding: "14px 32px",
+                border: "1.5px solid #047857",
+                borderRadius: 8,
+                padding: "13px 28px",
                 fontSize: 15,
                 fontWeight: 600,
                 cursor: "pointer",
@@ -253,7 +238,7 @@ const Home = () => {
       <section
         style={{
           background: "#fff",
-          borderBottom: "1px solid #e1ecf8",
+          borderBottom: "1px solid #e2e8f0",
           padding: "28px 40px",
         }}
       >
@@ -268,21 +253,18 @@ const Home = () => {
           }}
         >
           {[
-            ["500+", "Projects on Credify"],
-            ["2,000+", "Students Enrolled"],
+            ["500+", "Projects Available"],
+            ["2,000+", "Enrolled Students"],
             ["120+", "Verified Companies"],
             ["GHS 20", "Certificate Price"],
           ].map(([n, l]) => (
             <div key={l} style={{ textAlign: "center" }}>
               <div
                 style={{
-                  fontFamily: "'Clash Display',sans-serif",
-                  fontSize: 30,
+                  fontFamily: "'Plus Jakarta Sans',sans-serif",
+                  fontSize: 28,
                   fontWeight: 800,
-                  background: "linear-gradient(135deg,#0f3460,#0d7a52)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
+                  color: "#059669",
                 }}
               >
                 {n}
@@ -290,7 +272,7 @@ const Home = () => {
               <div
                 style={{
                   fontSize: 13,
-                  color: "#4a6080",
+                  color: "#475569",
                   fontWeight: 500,
                   marginTop: 2,
                 }}
@@ -302,28 +284,164 @@ const Home = () => {
         </div>
       </section>
 
-      <section style={{ padding: "88px 40px", background: "#f0f7ff" }}>
+      <section style={{ padding: "64px 40px", background: "#fff", borderBottom: "1px solid #e2e8f0" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: 56 }}>
+          {/* Section header */}
+          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: 16, marginBottom: 36 }}>
+            <div>
+              <div style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 11, fontWeight: 800, color: "#059669", textTransform: "uppercase", letterSpacing: "1px", marginBottom: 8, background: "#ecfdf5", border: "1px solid #a7f3d0", padding: "4px 10px", borderRadius: 20 }}>
+                <ShieldCheck size={13} /> Live on Credify
+              </div>
+              <h2 style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: 28, fontWeight: 800, color: "#0f172a", marginBottom: 6 }}>
+                Real Projects. Right Now.
+              </h2>
+              <p style={{ fontSize: 15, color: "#475569", maxWidth: 500 }}>
+                These are actual open briefs from verified companies — not made-up examples.
+              </p>
+            </div>
+            <button
+              className="btn btn-outline btn-sm"
+              onClick={() => nav("/projects")}
+              style={{ flexShrink: 0 }}
+            >
+              Browse All Projects
+            </button>
+          </div>
+
+          {/* Live project grid */}
+          {projects.filter(p => p.status === "Open").slice(0, 3).length > 0 ? (
+            <div className="grid-3" style={{ gap: 20 }}>
+              {projects.filter(p => p.status === "Open").slice(0, 3).map((p) => (
+                <div
+                  key={p.id}
+                  style={{
+                    background: "#f8fafc",
+                    border: "1px solid #e2e8f0",
+                    borderTop: "3px solid #059669",
+                    borderRadius: 10,
+                    padding: "22px",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 10,
+                    cursor: "pointer",
+                    transition: "box-shadow 0.15s, transform 0.15s",
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 6px 20px rgba(5,150,105,0.12)"; e.currentTarget.style.transform = "translateY(-2px)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.transform = "none"; }}
+                  onClick={() => nav("/projects")}
+                >
+                  {/* Skill + Status row */}
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{
+                      background: "#ecfdf5", color: "#059669",
+                      fontSize: 11, fontWeight: 800,
+                      padding: "3px 9px", borderRadius: 20,
+                      textTransform: "uppercase", letterSpacing: "0.6px",
+                    }}>
+                      {p.skill || "General"}
+                    </span>
+                    <span style={{
+                      background: "#dcfce7", color: "#166534",
+                      fontSize: 10, fontWeight: 700,
+                      padding: "2px 8px", borderRadius: 20,
+                      textTransform: "uppercase", letterSpacing: "0.5px",
+                    }}>
+                      Open
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <h3 style={{
+                    fontFamily: "'Plus Jakarta Sans',sans-serif",
+                    fontSize: 15, fontWeight: 700, color: "#0f172a",
+                    lineHeight: 1.4, margin: 0,
+                  }}>
+                    {p.title}
+                  </h3>
+
+                  {/* Description snippet */}
+                  <p style={{
+                    fontSize: 13, color: "#64748b",
+                    lineHeight: 1.55, margin: 0,
+                    display: "-webkit-box",
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: "vertical",
+                    overflow: "hidden",
+                  }}>
+                    {p.description}
+                  </p>
+
+                  {/* Meta row */}
+                  <div style={{ display: "flex", gap: 14, flexWrap: "wrap", marginTop: "auto", paddingTop: 6, borderTop: "1px solid #e2e8f0" }}>
+                    <span style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12, color: "#7a9ec0", fontWeight: 500 }}>
+                      <Building2 size={12} /> {p.company || "Verified Company"}
+                    </span>
+                    {p.duration && (
+                      <span style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12, color: "#7a9ec0", fontWeight: 500 }}>
+                        <Clock size={12} /> {p.duration}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* CTA hint */}
+                  <div style={{
+                    display: "flex", alignItems: "center", gap: 6,
+                    fontSize: 12.5, color: "#059669", fontWeight: 700, marginTop: 4,
+                  }}>
+                    Sign up to start this project <ArrowRight size={13} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            /* Skeleton / empty state while loading */
+            <div className="grid-3" style={{ gap: 20 }}>
+              {[1, 2, 3].map(i => (
+                <div key={i} style={{
+                  background: "#f8fafc", border: "1px solid #e2e8f0",
+                  borderTop: "3px solid #d1fae5", borderRadius: 10, padding: "22px",
+                  minHeight: 180,
+                }}>
+                  <div style={{ height: 12, background: "#e2e8f0", borderRadius: 6, marginBottom: 12, width: "60%" }} />
+                  <div style={{ height: 18, background: "#e2e8f0", borderRadius: 6, marginBottom: 8, width: "90%" }} />
+                  <div style={{ height: 12, background: "#e2e8f0", borderRadius: 6, width: "75%" }} />
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Trust footnote */}
+          <div style={{ marginTop: 28, display: "flex", alignItems: "center", gap: 10, justifyContent: "center" }}>
+            <ShieldCheck size={15} color="#059669" />
+            <span style={{ fontSize: 13, color: "#64748b" }}>
+              All projects are reviewed and approved by the Credify team before going live.
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <section style={{ padding: "80px 40px", background: "#f8fafc" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 50 }}>
             <h2 className="section-title" style={{ marginBottom: 12 }}>
               How Credify Works
             </h2>
             <p
               style={{
-                color: "#4a6080",
-                fontSize: 16,
+                color: "#475569",
+                fontSize: 15,
                 maxWidth: 500,
                 margin: "0 auto",
               }}
             >
-              From sign-up to verified credential in 7 simple steps
+              From account registration to verified credentials
             </p>
           </div>
           <div className="grid-3" style={{ gap: 18 }}>
-            {HOW_IT_WORKS.map(([num, icon, title, desc], i) => (
+            {HOW_IT_WORKS.map(([num, icon, title, desc]) => (
               <div
                 key={num}
-                className={`card card-hover animate-fade-up stagger-${Math.min(i + 1, 3)}`}
+                className="card card-hover"
                 style={{ padding: "26px" }}
               >
                 <div
@@ -336,33 +454,32 @@ const Home = () => {
                 >
                   <span
                     style={{
-                      fontFamily: "'Clash Display',sans-serif",
+                      fontFamily: "'Plus Jakarta Sans',sans-serif",
                       fontSize: 11,
                       fontWeight: 800,
-                      color: "#1565c0",
-                      background:
-                        "linear-gradient(135deg,rgba(15,52,96,0.08),rgba(13,122,82,0.08))",
+                      color: "#059669",
+                      background: "#ecfdf5",
                       padding: "3px 9px",
                       borderRadius: 6,
                     }}
                   >
                     {num}
                   </span>
-                  <span style={{ fontSize: 22 }}>{icon}</span>
+                  <span style={{ fontSize: 22, color: "#059669" }}>{icon}</span>
                 </div>
                 <h3
                   style={{
-                    fontFamily: "'Clash Display',sans-serif",
+                    fontFamily: "'Plus Jakarta Sans',sans-serif",
                     fontSize: 16,
                     fontWeight: 700,
                     marginBottom: 8,
-                    color: "#0d1f35",
+                    color: "#0f172a",
                   }}
                 >
                   {title}
                 </h3>
                 <p
-                  style={{ fontSize: 13.5, color: "#4a6080", lineHeight: 1.65 }}
+                  style={{ fontSize: 13.5, color: "#475569", lineHeight: 1.65 }}
                 >
                   {desc}
                 </p>
@@ -372,13 +489,13 @@ const Home = () => {
         </div>
       </section>
 
-      <section style={{ padding: "88px 40px", background: "#fff" }}>
+      <section style={{ padding: "80px 40px", background: "#fff" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <h2
             className="section-title"
-            style={{ textAlign: "center", marginBottom: 52 }}
+            style={{ textAlign: "center", marginBottom: 48 }}
           >
-            Everything Credify Offers
+            Platform Features
           </h2>
           <div className="grid-2" style={{ gap: 22 }}>
             {FEATURES.map(([icon, title, desc]) => (
@@ -387,11 +504,11 @@ const Home = () => {
                 className="card"
                 style={{ padding: "28px", display: "flex", gap: 20 }}
               >
-                <div style={{ fontSize: 30, flexShrink: 0 }}>{icon}</div>
+                <div style={{ fontSize: 30, flexShrink: 0, color: "#059669" }}>{icon}</div>
                 <div>
                   <h3
                     style={{
-                      fontFamily: "'Clash Display',sans-serif",
+                      fontFamily: "'Plus Jakarta Sans',sans-serif",
                       fontSize: 16,
                       fontWeight: 700,
                       marginBottom: 8,
@@ -412,31 +529,31 @@ const Home = () => {
         </div>
       </section>
 
-      <section style={{ padding: "88px 40px", background: "#f0f7ff" }}>
+      <section style={{ padding: "80px 40px", background: "#f8fafc" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div
             style={{
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              marginBottom: 40,
+              marginBottom: 36,
               flexWrap: "wrap",
               gap: 16,
             }}
           >
             <div>
               <h2 className="section-title" style={{ marginBottom: 6 }}>
-                Live Projects on Credify
+                Featured Projects
               </h2>
               <p style={{ color: "#4a6080", fontSize: 15 }}>
-                Real work from verified companies
+                Available tasks from verified organizations
               </p>
             </div>
             <button
               className="btn btn-outline btn-sm"
               onClick={() => nav("/projects")}
             >
-              View All →
+              View All Projects
             </button>
           </div>
           <div className="grid-2" style={{ gap: 20 }}>
@@ -458,7 +575,7 @@ const Home = () => {
                 </div>
                 <h3
                   style={{
-                    fontFamily: "'Clash Display',sans-serif",
+                    fontFamily: "'Plus Jakarta Sans',sans-serif",
                     fontSize: 16,
                     fontWeight: 700,
                     marginBottom: 8,
@@ -522,7 +639,7 @@ const Home = () => {
                   className="btn btn-primary btn-sm btn-block"
                   onClick={() => nav("/register")}
                 >
-                  Start on Credify →
+                  Start Project
                 </button>
               </div>
             ))}
@@ -532,55 +649,51 @@ const Home = () => {
 
       <section
         style={{
-          background: GRAD_HERO,
-          padding: "88px 40px",
+          background: FLAT_HERO_BG,
+          padding: "80px 40px",
           textAlign: "center",
           position: "relative",
-          overflow: "hidden",
         }}
       >
-        <Blob left="10%" top="10%" size={300} color="rgba(21,101,192,0.1)" />
-        <Blob left="70%" top="50%" size={250} color="rgba(13,122,82,0.1)" />
         <div style={{ position: "relative", zIndex: 1 }}>
           <h2
             style={{
-              fontFamily: "'Clash Display',sans-serif",
-              fontSize: 44,
+              fontFamily: "'Plus Jakarta Sans',sans-serif",
+              fontSize: 38,
               fontWeight: 700,
               color: "#fff",
-              marginBottom: 16,
-              letterSpacing: "-0.8px",
+              marginBottom: 14,
+              letterSpacing: "-0.5px",
             }}
           >
-            Start Your Credify Journey
+            Get Started on Credify
           </h2>
           <p
             style={{
-              color: "rgba(163,230,208,0.8)",
+              color: "#a7f3d0",
               fontSize: 16,
-              marginBottom: 40,
+              marginBottom: 36,
               maxWidth: 480,
-              margin: "0 auto 40px",
+              margin: "0 auto 36px",
+              opacity: 0.9,
             }}
           >
-            Join thousands of students on Credify who are proving their
-            skills through real work.
+            Join students demonstrating skills through practical project execution.
           </p>
           <button
             style={{
-              background: GRAD_BTN,
+              background: FLAT_ACCENT,
               color: "#fff",
               border: "none",
-              borderRadius: 12,
-              padding: "16px 52px",
-              fontSize: 17,
+              borderRadius: 8,
+              padding: "14px 44px",
+              fontSize: 16,
               fontWeight: 700,
               cursor: "pointer",
-              boxShadow: "0 8px 32px rgba(21,101,192,0.4)",
             }}
             onClick={() => nav("/register")}
           >
-            Join Credify Free →
+            Join Credify Free
           </button>
         </div>
       </section>

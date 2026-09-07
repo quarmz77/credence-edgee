@@ -362,7 +362,7 @@ const MyProjects = () => {
             {detailsModal.instructions && (
               <div style={{ background: "#f8faff", border: "1px solid #e1ecf8", borderRadius: 10, padding: "16px" }}>
                 <h4 style={{ fontSize: 14, fontWeight: 700, color: "#0d1f35", marginBottom: 8, display: "flex", alignItems: "center", gap: 6 }}>
-                  <FileText size={15} style={{ color: "#1565c0" }} /> Project Requirements & Instructions
+                  <FileText size={15} style={{ color: "#059669" }} /> Project Requirements & Instructions
                 </h4>
                 <div style={{ fontSize: 13.5, color: "#2a4a6a", lineHeight: 1.65, whiteSpace: "pre-line" }}>
                   {detailsModal.instructions}

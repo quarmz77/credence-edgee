@@ -26,12 +26,12 @@ import {
 
 // Preset Avatar Gradients & Icons for quick avatar selection
 const PRESET_AVATARS = [
-  "linear-gradient(135deg, #1565c0 0%, #10a070 100%)",
-  "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)",
-  "linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)",
-  "linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%)",
+  "linear-gradient(135deg, #059669 0%, #10b981 100%)",
+  "linear-gradient(135deg, #022c22 0%, #059669 100%)",
+  "linear-gradient(135deg, #064e3b 0%, #34d399 100%)",
+  "linear-gradient(135deg, #047857 0%, #10b981 100%)",
   "linear-gradient(135deg, #10b981 0%, #059669 100%)",
-  "linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%)",
+  "linear-gradient(135deg, #065f46 0%, #a7f3d0 100%)",
 ];
 
 const SKILL_SUGGESTIONS = [
@@ -461,7 +461,7 @@ const Profile = () => {
         >
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <span style={{ fontSize: 13, fontWeight: 700, color: "#0d1f35", display: "flex", alignItems: "center", gap: 6 }}>
-              <Sparkles size={15} color="#1565c0" /> Profile Strength: {completionStats.percentage}%
+              <Sparkles size={15} color="#059669" /> Profile Strength: {completionStats.percentage}%
             </span>
             <span style={{ fontSize: 12, fontWeight: 600, color: "#4a6080" }}>
               {completionStats.filledCount} of {completionStats.total} sections filled
@@ -481,10 +481,7 @@ const Profile = () => {
               style={{
                 width: `${completionStats.percentage}%`,
                 height: "100%",
-                background:
-                  completionStats.percentage === 100
-                    ? "linear-gradient(90deg, #10b981, #059669)"
-                    : "linear-gradient(90deg, #1565c0, #10a070)",
+                background: "#059669",
                 transition: "width 0.4s ease",
               }}
             />
@@ -558,7 +555,7 @@ const Profile = () => {
               paddingBottom: 12,
             }}
           >
-            <User size={18} color="#1565c0" /> Personal Details & Academic Background
+            <User size={18} color="#059669" /> Personal Details & Academic Background
           </h3>
 
           <div className="grid-2" style={{ gap: 18 }}>
@@ -688,7 +685,7 @@ const Profile = () => {
               paddingBottom: 12,
             }}
           >
-            <Briefcase size={18} color="#1565c0" /> Professional Headline, Bio & Verified Skills
+            <Briefcase size={18} color="#059669" /> Professional Headline, Bio & Verified Skills
           </h3>
 
           <div className="form-group">
@@ -745,7 +742,7 @@ const Profile = () => {
                   <span
                     key={i}
                     style={{
-                      background: "#1565c0",
+                      background: "#059669",
                       color: "#fff",
                       padding: "5px 12px",
                       borderRadius: 20,
@@ -754,7 +751,7 @@ const Profile = () => {
                       display: "inline-flex",
                       alignItems: "center",
                       gap: 6,
-                      boxShadow: "0 2px 6px rgba(21, 101, 192, 0.2)",
+                      boxShadow: "0 2px 6px rgba(5, 150, 105, 0.2)",
                     }}
                   >
                     {skill}
@@ -818,11 +815,11 @@ const Profile = () => {
                     className="btn btn-ghost btn-sm"
                     style={{
                       background: "#fff",
-                      border: "1px solid #c3d8f0",
+                      border: "1px solid #a7f3d0",
                       padding: "3px 10px",
                       fontSize: 12,
                       borderRadius: 16,
-                      color: "#1565c0",
+                      color: "#059669",
                     }}
                   >
                     + {suggested}
@@ -845,7 +842,7 @@ const Profile = () => {
                 gap: 8,
               }}
             >
-              <Globe size={18} color="#1565c0" /> Portfolio & Social Links
+              <Globe size={18} color="#059669" /> Portfolio & Social Links
             </h4>
 
             <div className="grid-3" style={{ gap: 16 }}>
@@ -970,7 +967,7 @@ const Profile = () => {
                 paddingBottom: 12,
               }}
             >
-              <KeyRound size={18} color="#1565c0" /> Change Account Password
+              <KeyRound size={18} color="#059669" /> Change Account Password
             </h3>
 
             <form onSubmit={handleChangePassword} style={{ display: "flex", flexDirection: "column", gap: 18 }}>
@@ -1065,15 +1062,15 @@ const Profile = () => {
               marginBottom: 20,
             }}
           >
-            <Award size={18} color="#1565c0" /> Verified Credentials & Activity Summary
+            <Award size={18} color="#059669" /> Verified Credentials & Activity Summary
           </h3>
 
           <div className="stat-grid" style={{ marginBottom: 24 }}>
-            <div className="stat-card" style={{ background: "linear-gradient(135deg,#0f3460,#1565c0)" }}>
+            <div className="stat-card" style={{ background: "#022c22" }}>
               <div className="stat-card-value">{form.skills.length}</div>
               <div className="stat-card-label">Verified Skills Listed</div>
             </div>
-            <div className="stat-card" style={{ background: "linear-gradient(135deg,#0d7a52,#10b981)" }}>
+            <div className="stat-card" style={{ background: "#059669" }}>
               <div className="stat-card-value">{completionStats.percentage}%</div>
               <div className="stat-card-label">Profile Strength</div>
             </div>

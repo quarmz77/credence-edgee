@@ -17,13 +17,13 @@ const DashboardTopBar = ({ role }) => {
   return (
     <div style={{
       position: 'sticky', top: 0, zIndex: 50,
-      background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)',
+      background: '#ffffff',
       borderBottom: '1px solid #e1ecf8', padding: '0 32px', height: 60,
       display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0,
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
         <NavLink to="/" style={{ fontSize: 13, color: '#4a6080', textDecoration: 'none' }}>← Back to site</NavLink>
-        <span style={{ color: '#c3d8f0' }}>|</span>
+        <span style={{ color: '#a7f3d0' }}>|</span>
         <span style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.6px', color: '#7a9ec0' }}>
           Credify · {role} Portal
         </span>
@@ -32,7 +32,7 @@ const DashboardTopBar = ({ role }) => {
         <span style={{ fontSize: 13.5, color: '#4a6080', fontWeight: 500 }}>{user?.name}</span>
         <div style={{
           width: 32, height: 32, borderRadius: '50%',
-          background: 'linear-gradient(135deg,#0f3460,#0d7a52)',
+          background: '#059669',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           color: '#fff', fontWeight: 800, fontSize: 13, overflow: 'hidden',
         }}>

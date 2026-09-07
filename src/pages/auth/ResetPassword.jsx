@@ -55,20 +55,21 @@ const ResetPassword = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "#f0f7ff",
+        background: "#f8fafc",
         padding: 20,
       }}
     >
       <div
-        className="card"
+        className="card animate-scale-in"
         style={{ width: "100%", maxWidth: 440, padding: "44px" }}
       >
-        <div style={{ marginBottom: 28 }}>
+        <div style={{ marginBottom: 28 }} className="animate-scale-in">
           <Logo size={30} />
         </div>
         <h1
+          className="animate-slide-up delay-100"
           style={{
-            fontFamily: "'Clash Display',sans-serif",
+            fontFamily: "'Plus Jakarta Sans',sans-serif",
             fontSize: 24,
             fontWeight: 700,
             marginBottom: 8,
@@ -76,7 +77,7 @@ const ResetPassword = () => {
         >
           Set a New Credify Password
         </h1>
-        <p style={{ color: "#4a6080", fontSize: 14, marginBottom: 28 }}>
+        <p className="animate-slide-up delay-100" style={{ color: "#475569", fontSize: 14, marginBottom: 28 }}>
           Create a new password for your Credify account.
         </p>
         {!token ? (
@@ -85,6 +86,7 @@ const ResetPassword = () => {
           </div>
         ) : (
           <form
+            className="animate-slide-up delay-200"
             onSubmit={handleSubmit}
             style={{ display: "flex", flexDirection: "column", gap: 16 }}
           >
@@ -98,7 +100,7 @@ const ResetPassword = () => {
                     left: 12,
                     top: "50%",
                     transform: "translateY(-50%)",
-                    color: "#7a9ec0",
+                    color: "#64748b",
                   }}
                 />
                 <input
@@ -121,7 +123,7 @@ const ResetPassword = () => {
                     left: 12,
                     top: "50%",
                     transform: "translateY(-50%)",
-                    color: "#7a9ec0",
+                    color: "#64748b",
                   }}
                 />
                 <input
@@ -154,7 +156,7 @@ const ResetPassword = () => {
             background: "none",
             border: "none",
             cursor: "pointer",
-            color: "#7a9ec0",
+            color: "#64748b",
             fontSize: 13.5,
             fontWeight: 500,
           }}

@@ -51,7 +51,7 @@ const Contact = () => {
               <label className="form-label">Message <span style={{ color: '#ef4444' }}>*</span></label>
               <textarea className="form-input" rows={5} placeholder="Tell the Credify team what you need..." value={form.message} onChange={set('message')} style={{ resize: 'vertical' }} />
             </div>
-            <Button type="submit" loading={loading} block>Send to Credify →</Button>
+            <Button type="submit" loading={loading} block>Send Message</Button>
           </form>
         </div>
 
@@ -59,13 +59,13 @@ const Contact = () => {
           {[
             { icon: <Mail size={20} />, title: 'Email', value: 'hello@credify.com.gh', sub: 'We reply within 24 hours' },
             { icon: <Phone size={20} />, title: 'Phone / WhatsApp', value: '+233 XX XXX XXXX', sub: 'Mon–Fri, 9am–6pm GMT' },
-            { icon: <MapPin size={20} />, title: 'Location', value: 'Accra, Ghana 🇬🇭', sub: 'Remote-first team' },
+            { icon: <MapPin size={20} />, title: 'Location', value: 'Accra, Ghana', sub: 'Remote-first team' },
           ].map(item => (
             <div key={item.title} className="card" style={{ padding: '22px', display: 'flex', gap: 16, alignItems: 'flex-start' }}>
               <div style={{
-                width: 42, height: 42, borderRadius: 10, flexShrink: 0,
-                background: 'linear-gradient(135deg,rgba(15,52,96,0.08),rgba(13,122,82,0.08))',
-                display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#1565c0',
+                width: 42, height: 42, borderRadius: 8, flexShrink: 0,
+                background: '#ecfdf5',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#059669',
               }}>{item.icon}</div>
               <div>
                 <div style={{ fontSize: 12, fontWeight: 700, color: '#7a9ec0', textTransform: 'uppercase', letterSpacing: '0.6px', marginBottom: 4 }}>{item.title}</div>

@@ -53,7 +53,7 @@ const Navbar = () => {
 
       <nav style={{
         position: 'sticky', top: 0, zIndex: 100,
-        background: 'rgba(255,255,255,0.93)', backdropFilter: 'blur(14px)',
+        background: '#ffffff',
         borderBottom: '1px solid #e1ecf8', padding: '0 40px', height: 64,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24,
       }}>
@@ -67,8 +67,8 @@ const Navbar = () => {
               padding: '7px 14px', borderRadius: 8,
               fontFamily: "'Plus Jakarta Sans',sans-serif",
               fontWeight: 500, fontSize: 14, textDecoration: 'none',
-              color: isActive ? '#1565c0' : '#4a6080',
-              background: isActive ? '#f0f7ff' : 'transparent',
+              color: isActive ? '#059669' : '#4a6080',
+              background: isActive ? '#ecfdf5' : 'transparent',
               transition: 'all 0.15s',
             })}>
               {label}
@@ -79,8 +79,8 @@ const Navbar = () => {
         <div className="navbar-desktop-actions" style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
           <button onClick={() => setSearchOpen(o => !o)} style={{
             width: 38, height: 38, borderRadius: 10,
-            background: searchOpen ? '#f0f7ff' : 'transparent',
-            border: `1.5px solid ${searchOpen ? '#c3d8f0' : 'transparent'}`,
+            background: searchOpen ? '#ecfdf5' : 'transparent',
+            border: `1.5px solid ${searchOpen ? '#a7f3d0' : 'transparent'}`,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             cursor: 'pointer', color: '#7a9ec0', transition: 'all 0.15s',
           }}>
@@ -92,10 +92,10 @@ const Navbar = () => {
               <button className="btn btn-ghost btn-sm" onClick={() => navigate(getDashPath())}>Dashboard</button>
               <div onClick={() => navigate(getDashPath() + '/profile')} style={{
                 width: 34, height: 34, borderRadius: '50%',
-                background: 'linear-gradient(135deg,#0f3460,#0d7a52)',
+                background: '#059669',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 color: '#fff', fontWeight: 800, fontSize: 13,
-                cursor: 'pointer', border: '2px solid #e1ecf8', overflow: 'hidden',
+                cursor: 'pointer', border: '2px solid #ecfdf5', overflow: 'hidden',
               }}>
                 {user?.avatar ? <img src={user.avatar} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : (user?.name?.charAt(0) || 'U')}
               </div>
@@ -154,8 +154,8 @@ const Navbar = () => {
               padding: '10px 14px', borderRadius: 8,
               fontFamily: "'Plus Jakarta Sans',sans-serif",
               fontWeight: 500, fontSize: 15, textDecoration: 'none',
-              color: isActive ? '#1565c0' : '#4a6080',
-              background: isActive ? '#f0f7ff' : 'transparent',
+              color: isActive ? '#059669' : '#4a6080',
+              background: isActive ? '#ecfdf5' : 'transparent',
             })}>
               {label}
             </NavLink>

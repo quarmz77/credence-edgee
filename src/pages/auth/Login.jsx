@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import useAuth from "@/hooks/useAuth";
 import Logo from "@/components/layout/Logo";
 import toast from "react-hot-toast";
-import { Eye, EyeOff, Mail, Lock, Lightbulb } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 
 const Login = () => {
   const { login } = useAuth();
@@ -44,26 +44,27 @@ const Login = () => {
     <div className="auth-layout">
       <div className="auth-left">
         <div
-          className="auth-left-blob"
+          className="auth-left-blob animate-float"
           style={{
-            left: "-15%",
-            top: "-20%",
+            left: "-10%",
+            top: "-15%",
             width: 480,
             height: 480,
-            background: "rgba(21,101,192,0.14)",
+            background: "radial-gradient(circle, rgba(16,185,129,0.35) 0%, rgba(5,150,105,0.15) 50%, rgba(2,44,34,0) 70%)",
           }}
         />
         <div
-          className="auth-left-blob"
+          className="auth-left-blob animate-float"
           style={{
             right: "-10%",
             bottom: "-10%",
-            width: 320,
-            height: 320,
-            background: "rgba(13,122,82,0.12)",
+            width: 360,
+            height: 360,
+            background: "radial-gradient(circle, rgba(52,211,153,0.3) 0%, rgba(16,185,129,0.12) 50%, rgba(2,44,34,0) 70%)",
+            animationDelay: "-3s",
           }}
         />
-        <div className="auth-left-content">
+        <div className="auth-left-content animate-slide-in-left">
           <Logo size={36} light />
           <h2 className="auth-left-title" style={{ marginTop: 32 }}>
             Welcome back to
@@ -80,9 +81,12 @@ const Login = () => {
               "Track your submitted work and ratings",
               "Manage your Credify certificates",
               "Keep your project activity private",
-            ].map((f) => (
-              <div key={f} className="auth-feature-item">
-                <span className="auth-feature-dot" />
+            ].map((f, idx) => (
+              <div
+                key={f}
+                className={`auth-feature-item animate-slide-up delay-${(idx + 1) * 100}`}
+              >
+                <span className="auth-feature-dot animate-pulse-green" />
                 {f}
               </div>
             ))}
@@ -91,39 +95,18 @@ const Login = () => {
       </div>
 
       <div className="auth-right">
-        <div className="auth-card">
-          <div style={{ marginBottom: 28 }}>
+        <div className="auth-card animate-slide-in-right">
+          <div style={{ marginBottom: 28 }} className="animate-scale-in">
             <Logo size={30} />
           </div>
-          <h1 className="auth-title">Sign In to Credify</h1>
-          <p className="auth-subtitle">
+          <h1 className="auth-title animate-slide-up delay-100">Sign In to Credify</h1>
+          <p className="auth-subtitle animate-slide-up delay-100">
             Enter your credentials to access your account
           </p>
 
-          {/* Demo hint */}
-          <div
-            style={{
-              background: "#f0f7ff",
-              border: "1px solid #c3d8f0",
-              borderRadius: 10,
-              padding: "10px 14px",
-              marginBottom: 20,
-              fontSize: 12.5,
-              color: "#4a6080",
-              lineHeight: 1.6,
-              display: "flex",
-              alignItems: "flex-start",
-              gap: 8,
-            }}
-          >
-            <Lightbulb size={14} style={{ marginTop: 2, color: "#1565c0" }} />
-            <strong>Admin:</strong> create an admin account through the backend
-            seed script, then sign in here with that email/password. Use an
-            email containing "company" for the company portal or any other email
-            for the student portal.
-          </div>
 
-          <form className="auth-form" onSubmit={handleSubmit}>
+
+          <form className="auth-form animate-slide-up delay-200" onSubmit={handleSubmit}>
             <div className="form-group">
               <label className="form-label">
                 Email Address <span style={{ color: "#ef4444" }}>*</span>
@@ -136,7 +119,7 @@ const Login = () => {
                     left: 12,
                     top: "50%",
                     transform: "translateY(-50%)",
-                    color: "#7a9ec0",
+                    color: "#64748b",
                   }}
                 />
                 <input
@@ -167,7 +150,7 @@ const Login = () => {
                   to="/forgot-password"
                   style={{
                     fontSize: 12.5,
-                    color: "#1565c0",
+                    color: "#059669",
                     fontWeight: 600,
                     textDecoration: "none",
                   }}
@@ -183,7 +166,7 @@ const Login = () => {
                     left: 12,
                     top: "50%",
                     transform: "translateY(-50%)",
-                    color: "#7a9ec0",
+                    color: "#64748b",
                   }}
                 />
                 <input
@@ -205,7 +188,7 @@ const Login = () => {
                     background: "none",
                     border: "none",
                     cursor: "pointer",
-                    color: "#7a9ec0",
+                    color: "#64748b",
                     padding: 0,
                   }}
                 >

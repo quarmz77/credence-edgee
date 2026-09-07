@@ -29,17 +29,17 @@ const Pricing = () => {
 
       <div className="grid-2" style={{ gap: 24, marginBottom: 64 }}>
         {PLANS.map(p => (
-          <div key={p.label} className="card" style={{ padding: '36px', border: p.primary ? '2px solid #1565c0' : '1px solid #e1ecf8', position: 'relative' }}>
+          <div key={p.label} className="card" style={{ padding: '36px', border: p.primary ? '2px solid #059669' : '1px solid #e1ecf8', position: 'relative' }}>
             {p.primary && (
-              <div style={{ position: 'absolute', top: 18, right: 18, background: 'linear-gradient(135deg,#1565c0,#10a070)', color: '#fff', fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 20 }}>BEST VALUE</div>
+              <div style={{ position: 'absolute', top: 18, right: 18, background: '#059669', color: '#fff', fontSize: 10, fontWeight: 800, padding: '3px 10px', borderRadius: 4 }}>STANDARD</div>
             )}
-            <div style={{ fontFamily: "'Clash Display',sans-serif", fontSize: 12, fontWeight: 800, color: p.primary ? '#1565c0' : '#7a9ec0', textTransform: 'uppercase', letterSpacing: '1.2px', marginBottom: 14 }}>{p.label}</div>
-            <div style={{ fontFamily: "'Clash Display',sans-serif", fontSize: 40, fontWeight: 800, color: '#0d1f35' }}>{p.price}</div>
+            <div style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: 12, fontWeight: 800, color: p.primary ? '#059669' : '#7a9ec0', textTransform: 'uppercase', letterSpacing: '1.2px', marginBottom: 14 }}>{p.label}</div>
+            <div style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: 40, fontWeight: 800, color: '#0d1f35' }}>{p.price}</div>
             <div style={{ fontSize: 13, color: '#7a9ec0', marginBottom: 28 }}>{p.sub}</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 32 }}>
               {p.features.map(f => (
                 <div key={f} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <CheckCircle size={15} color="#0d7a52" style={{ flexShrink: 0 }} />
+                  <CheckCircle size={15} color="#059669" style={{ flexShrink: 0 }} />
                   <span style={{ fontSize: 14, color: '#0d1f35' }}>{f}</span>
                 </div>
               ))}
@@ -50,13 +50,13 @@ const Pricing = () => {
       </div>
 
       <div>
-        <h2 style={{ fontFamily: "'Clash Display',sans-serif", fontSize: 26, fontWeight: 700, marginBottom: 28, textAlign: 'center' }}>
-          Credify — FAQ
+        <h2 style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: 26, fontWeight: 700, marginBottom: 28, textAlign: 'center' }}>
+          Frequently Asked Questions
         </h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           {FAQ.map(([q, a]) => (
             <div key={q} className="card" style={{ padding: '22px 26px' }}>
-              <h3 style={{ fontFamily: "'Clash Display',sans-serif", fontSize: 15, fontWeight: 700, color: '#0d1f35', marginBottom: 8 }}>{q}</h3>
+              <h3 style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: 15, fontWeight: 700, color: '#0d1f35', marginBottom: 8 }}>{q}</h3>
               <p style={{ fontSize: 14, color: '#4a6080', lineHeight: 1.65 }}>{a}</p>
             </div>
           ))}

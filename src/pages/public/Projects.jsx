@@ -6,7 +6,7 @@ import useAuth from "@/hooks/useAuth";
 import useProjects from "@/hooks/useProjects";
 import Modal from "@/components/common/Modal";
 import toast from "react-hot-toast";
-import { Clock, MapPin, Building2, Lock, Bookmark, Info, CalendarClock, Eye, FileText, Code2, ArrowRight } from "lucide-react";
+import { Clock, MapPin, Building2, Lock, Bookmark, Info, CalendarClock, Eye, FileText, Code2, ArrowRight, ShieldCheck } from "lucide-react";
 
 const Projects = () => {
   const { isAuthenticated } = useAuth();
@@ -66,18 +66,47 @@ const Projects = () => {
         style={{
           display: "flex",
           alignItems: "center",
-          gap: 12,
-          background: "linear-gradient(135deg,rgba(15,52,96,0.05),rgba(13,122,82,0.05))",
-          border: "1px solid #c3d8f0",
-          borderRadius: 12,
-          padding: "14px 20px",
-          marginBottom: 32,
+          gap: 16,
+          background: "#ecfdf5",
+          border: "1px solid #a7f3d0",
+          borderLeft: "4px solid #059669",
+          borderRadius: 8,
+          padding: "16px 22px",
+          marginBottom: 36,
         }}
       >
-        <Lock size={20} />
-        <p style={{ fontSize: 13.5, color: "#4a6080", lineHeight: 1.6 }}>
-          <strong style={{ color: "#0d1f35" }}>Credify Privacy Guarantee:</strong> No one can see who selected a project, other submissions, or reviewer feedback.
-        </p>
+        <div
+          style={{
+            width: 40,
+            height: 40,
+            borderRadius: 6,
+            background: "#059669",
+            color: "#fff",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexShrink: 0,
+          }}
+        >
+          <ShieldCheck size={22} />
+        </div>
+        <div>
+          <div
+            style={{
+              fontSize: 11,
+              fontWeight: 800,
+              color: "#059669",
+              letterSpacing: "0.8px",
+              textTransform: "uppercase",
+              marginBottom: 2,
+            }}
+          >
+            Verification & Privacy Guarantee
+          </div>
+          <p style={{ fontSize: 13.5, color: "#334155", lineHeight: 1.5, margin: 0 }}>
+            Every task is posted by verified companies. Student selections, submissions, and reviewer evaluation reports remain strictly private between you and the reviewer.
+          </p>
+        </div>
       </div>
 
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 32 }}>
@@ -307,7 +336,7 @@ const Projects = () => {
                 }}
               >
                 <h4 style={{ fontSize: 14, fontWeight: 700, color: "#0d1f35", marginBottom: 8, display: "flex", alignItems: "center", gap: 6 }}>
-                  <FileText size={15} style={{ color: "#1565c0" }} /> Project Requirements & Instructions
+                  <FileText size={15} style={{ color: "#059669" }} /> Project Requirements & Instructions
                 </h4>
                 <div style={{ fontSize: 13.5, color: "#2a4a6a", lineHeight: 1.65, whitespace: "pre-line" }}>
                   {detailModal.instructions}

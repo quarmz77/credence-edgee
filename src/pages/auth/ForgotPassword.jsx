@@ -36,22 +36,23 @@ const ForgotPassword = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "#f0f7ff",
+        background: "#f8fafc",
         padding: 20,
       }}
     >
       <div
-        className="card"
+        className="card animate-scale-in"
         style={{ width: "100%", maxWidth: 440, padding: "44px" }}
       >
-        <div style={{ marginBottom: 28 }}>
+        <div style={{ marginBottom: 28 }} className="animate-scale-in">
           <Logo size={30} />
         </div>
         {!sent ? (
           <>
             <h1
+              className="animate-slide-up delay-100"
               style={{
-                fontFamily: "'Clash Display',sans-serif",
+                fontFamily: "'Plus Jakarta Sans',sans-serif",
                 fontSize: 24,
                 fontWeight: 700,
                 marginBottom: 8,
@@ -59,10 +60,11 @@ const ForgotPassword = () => {
             >
               Reset Your Credify Password
             </h1>
-            <p style={{ color: "#4a6080", fontSize: 14, marginBottom: 28 }}>
+            <p className="animate-slide-up delay-100" style={{ color: "#475569", fontSize: 14, marginBottom: 28 }}>
               Enter your Credify email and we'll send you a reset link.
             </p>
             <form
+              className="animate-slide-up delay-200"
               onSubmit={handleSubmit}
               style={{ display: "flex", flexDirection: "column", gap: 16 }}
             >
@@ -76,7 +78,7 @@ const ForgotPassword = () => {
                       left: 12,
                       top: "50%",
                       transform: "translateY(-50%)",
-                      color: "#7a9ec0",
+                      color: "#64748b",
                     }}
                   />
                   <input
@@ -100,11 +102,11 @@ const ForgotPassword = () => {
             </form>
           </>
         ) : (
-          <div style={{ textAlign: "center" }}>
-            <Mail size={52} style={{ color: "#1565c0", marginBottom: 16 }} />
+          <div style={{ textAlign: "center" }} className="animate-scale-in">
+            <Mail size={52} className="animate-float" style={{ color: "#059669", marginBottom: 16 }} />
             <h2
               style={{
-                fontFamily: "'Clash Display',sans-serif",
+                fontFamily: "'Plus Jakarta Sans',sans-serif",
                 fontSize: 22,
                 fontWeight: 700,
                 marginBottom: 10,
@@ -114,7 +116,7 @@ const ForgotPassword = () => {
             </h2>
             <p
               style={{
-                color: "#4a6080",
+                color: "#475569",
                 fontSize: 14,
                 lineHeight: 1.65,
                 marginBottom: 28,
@@ -140,7 +142,7 @@ const ForgotPassword = () => {
             background: "none",
             border: "none",
             cursor: "pointer",
-            color: "#7a9ec0",
+            color: "#64748b",
             fontSize: 13.5,
             fontWeight: 500,
           }}

@@ -15,6 +15,21 @@ const Dashboard = () => {
   const { myProjects, submissionsLoading } = useProjects()
   const { certificateItems, setCertificateItems } = useUserStore()
   const [certsCount, setCertsCount] = useState(0)
+  const [greeting, setGreeting] = useState('Welcome')
+
+
+  useEffect(() => {
+    const hours = new Date().getHours();
+    if (hours >=5 && hours< 12) {
+      setGreeting('Good Morning')
+    } else if (hours >= 12 && hours< 17) {
+      setGreeting('Good Afternoon')
+    } else if (hours >= 17 && hours < 22) {
+      setGreeting('Good Evening')
+    } else {
+      setGreeting('Good Night')
+    }
+  })
 
   useEffect(() => {
     if (!user?.id) return
@@ -33,15 +48,15 @@ const Dashboard = () => {
   return (
     <div className="animate-fade-up">
       <div className="dash-header">
-        <h1>Welcome back, {user?.name?.split(' ')[0]}</h1>
+        <h1>{greeting}, {user?.name?.split(' ')[0]}</h1>
         <p>Here's your Credify activity at a glance.</p>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16, marginBottom: 32 }}>
         {[
-          { label: 'Active Projects', value: inProgress, icon: <FolderOpen size={20} />, grad: 'linear-gradient(135deg,#1565c0,#42a5f5)' },
-          { label: 'Reviewed Projects', value: reviewed, icon: <CheckCircle size={20} />, grad: 'linear-gradient(135deg,#0d7a52,#1dbf86)' },
-          { label: 'Certificates', value: paidCertificates, icon: <FileText size={20} />, grad: 'linear-gradient(135deg,#7c3aed,#a78bfa)' },
+          { label: 'Active Projects', value: inProgress, icon: <FolderOpen size={20} />, grad: '#059669' },
+          { label: 'Reviewed Projects', value: reviewed, icon: <CheckCircle size={20} />, grad: '#047857' },
+          { label: 'Certificates', value: paidCertificates, icon: <FileText size={20} />, grad: '#022c22' },
         ].map(c => (
           <div key={c.label} className="stat-card" style={{ background: c.grad }}>
             <div style={{ marginBottom: 10 }}>{c.icon}</div>

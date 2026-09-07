@@ -97,15 +97,15 @@ const VerifyEmail = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "#f0f7ff",
+        background: "#f8fafc",
         padding: 20,
       }}
     >
       <div
-        className="card"
+        className="card animate-scale-in"
         style={{ width: "100%", maxWidth: 460, padding: "40px" }}
       >
-        <div style={{ marginBottom: 24, textAlign: "center" }}>
+        <div style={{ marginBottom: 24, textAlign: "center" }} className="animate-scale-in">
           <Logo size={32} />
         </div>
         <div style={{ textAlign: "center" }}>
@@ -113,40 +113,43 @@ const VerifyEmail = () => {
             <Loader2
               size={52}
               className="animate-spin"
-              style={{ color: "#1565c0", marginBottom: 16 }}
+              style={{ color: "#059669", marginBottom: 16 }}
             />
           )}
           {status === "success" && (
             <CheckCircle
               size={56}
-              style={{ color: "#16a34a", marginBottom: 16 }}
+              className="animate-scale-in"
+              style={{ color: "#059669", marginBottom: 16 }}
             />
           )}
           {(status === "failed" || status === "invalid") && (
             <XCircle
               size={56}
+              className="animate-scale-in"
               style={{ color: "#dc2626", marginBottom: 16 }}
             />
           )}
 
           <h1
+            className="animate-slide-up delay-100"
             style={{
-              fontFamily: "'Clash Display', sans-serif",
+              fontFamily: "'Plus Jakarta Sans', sans-serif",
               fontSize: 22,
               fontWeight: 700,
               marginBottom: 8,
-              color: "#0d1f35",
+              color: "#0f172a",
             }}
           >
             {title}
           </h1>
-          <p style={{ color: "#4a6080", fontSize: 14, marginBottom: 24, lineHeight: 1.6 }}>
+          <p className="animate-slide-up delay-100" style={{ color: "#475569", fontSize: 14, marginBottom: 24, lineHeight: 1.6 }}>
             {message}
           </p>
 
           {status === "success" ? (
             <button
-              className="btn btn-primary btn-block"
+              className="btn btn-primary btn-block animate-slide-up delay-200"
               style={{ padding: "12px" }}
               onClick={() => nav(user ? (user.role === "company" ? "/company" : user.role === "admin" ? "/admin" : "/student-dashboard") : "/login")}
             >
@@ -154,7 +157,7 @@ const VerifyEmail = () => {
             </button>
           ) : (
             (status === "failed" || status === "invalid") && (
-              <form onSubmit={handleResend} style={{ marginTop: 16, textAlign: "left" }}>
+              <form onSubmit={handleResend} className="animate-slide-up delay-200" style={{ marginTop: 16, textAlign: "left" }}>
                 <div className="form-group" style={{ marginBottom: 12 }}>
                   <label className="form-label" style={{ fontSize: 13 }}>Resend Verification Link</label>
                   <input
@@ -189,7 +192,7 @@ const VerifyEmail = () => {
               background: "none",
               border: "none",
               cursor: "pointer",
-              color: "#7a9ec0",
+              color: "#64748b",
               fontSize: 13.5,
               fontWeight: 500,
             }}

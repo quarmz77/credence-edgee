@@ -298,7 +298,7 @@ const Certificates = () => {
                     gap: 12,
                     padding: "12px 16px",
                     borderRadius: 10,
-                    border: `1.5px solid ${method === key ? "#1565c0" : "#c3d8f0"}`,
+                    border: `1.5px solid ${method === key ? "#059669" : "#a7f3d0"}`,
                     cursor: "pointer",
                   }}
                 >
