@@ -13,6 +13,10 @@ export const useProjectStore = create((set) => ({
   setSubmissions: (submissions) => set({ submissions }),
   addMyProject: (project) =>
     set((s) => ({ myProjects: [...s.myProjects, project] })),
+  removeMyProject: (submissionId) =>
+    set((s) => ({
+      myProjects: s.myProjects.filter((p) => p.id !== submissionId && p.submissionId !== submissionId),
+    })),
   setLoading: (loading) => set({ loading }),
   setSubmissionsLoading: (submissionsLoading) => set({ submissionsLoading }),
 }));

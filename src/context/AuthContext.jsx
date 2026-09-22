@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react'
+import API from '@/api/axios'
 import {
   registerUser,
   getMe,
@@ -12,52 +13,50 @@ const AuthContext = createContext(null)
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
-  
-useEffect(() => {
-  getMe()
-    .then((res) => {
-      const userData = res?.user || res;
-      setUser(userData);
-    })
-    .catch(() => {
-      setUser(null);
-    })
-    .finally(() => {
-      setLoading(false);
-    });
-}, []);
-  
+
+  useEffect(() => {
+    const initAuth = async () => {
+      try {
+        // Seed the CSRF cookie so subsequent POST/PUT/DELETE requests are accepted.
+        // Failures here are non-fatal (e.g. backend not yet running).
+        await API.get("/auth/csrf").catch(() => {});
+
+        // Try to load the current user from the access-token cookie.
+        // If that fails with 401, the axios interceptor will automatically
+        // attempt POST /auth/refresh before this catch block is reached.
+        const res = await getMe();
+        setUser(res?.user || res || null);
+      } catch {
+        // Both /auth/me and the silent refresh failed → user is not logged in.
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    initAuth();
+  }, []);
 
   const login = useCallback(async (email, password) => {
     const response = await loginUser({ email, password })
     const { user, redirectPath } = response;
-
     setUser(user);
-
-    return {
-      success: true,
-      role: user.role,
-      redirectPath,
-    };
+    return { success: true, role: user.role, redirectPath };
   }, [])
 
   const register = useCallback(async (data) => {
-    const response = await registerUser(data)
-    // After the OTP flow: registerUser returns { email, requiresOtp: true }
-    // Do NOT set user/token yet — the user must verify OTP first
-    return response
+    // registerUser returns { email, requiresOtp: true }
+    // Do NOT set the user yet — they must complete OTP first.
+    return await registerUser(data)
   }, [])
 
-  
-
   const logout = useCallback(async () => {
-    await logoutUser();
+    try { await logoutUser(); } catch { /* ignore */ }
     setUser(null);
   }, []);
 
   const updateUser = useCallback(async (updates) => {
     const res = await updateProfile(updates)
-    // authService.updateProfile returns res.data.data → { user }
     const updatedUser = res?.user || res
     setUser(updatedUser)
     return updatedUser

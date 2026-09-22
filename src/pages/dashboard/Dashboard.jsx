@@ -29,7 +29,7 @@ const Dashboard = () => {
     } else {
       setGreeting('Good Night')
     }
-  })
+  }, [])
 
   useEffect(() => {
     if (!user?.id) return

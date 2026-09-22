@@ -33,8 +33,9 @@ const Login = () => {
       if (result.role === "admin") nav("/admin");
       else if (result.role === "company") nav("/company");
       else nav("/student-dashboard");
-    } catch {
-      toast.error("Invalid email or password");
+    } catch (err) {
+      const msg = err.response?.data?.message || "Invalid email or password";
+      toast.error(msg);
     } finally {
       setLoading(false);
     }

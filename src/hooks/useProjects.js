@@ -125,7 +125,7 @@ const useProjects = () => {
     return () => {
       isMounted = false;
     };
-  }, [setLoading, setProjects]);
+  }, []);
 
   useEffect(() => {
     if (!isAuthenticated || !user?.id) return;
@@ -149,7 +149,7 @@ const useProjects = () => {
     return () => {
       isMounted = false;
     };
-  }, [isAuthenticated, user?.id, setMyProjects, setSubmissionsLoading]);
+  }, [isAuthenticated, user?.id]);
 
   const filtered = useMemo(() => {
     if (filter === "All") return projects;
@@ -180,7 +180,35 @@ const useProjects = () => {
           attachments: [],
         });
 
-        addMyProject(normalizeSubmission(submission));
+        // Build the myProject entry using the project data we already have,
+        // since the freshly-created submission has no populated .project field yet.
+        const myProjectEntry = {
+          id: submission?.id || submission?._id,
+          submissionId: submission?.id || submission?._id,
+          projectId: project.id,
+          title: project.title,
+          description: project.description || "",
+          skill: project.skill,
+          company: project.company,
+          duration: project.duration,
+          type: project.type,
+          deadline: project.deadline || null,
+          status: "In Progress",
+          submissionStatus: "ongoing",
+          rating: null,
+          feedback: null,
+          content: "",
+          githubRepoUrl: "",
+          zipFileUrl: "",
+          zipFileName: "",
+          attachments: [],
+          submittedAt: null,
+          createdAt: submission?.createdAt,
+          certEligible: false,
+          certPaid: false,
+        };
+
+        addMyProject(myProjectEntry);
         return { success: true };
       } catch (error) {
         if (error?.response?.status === 409) return { already: true };

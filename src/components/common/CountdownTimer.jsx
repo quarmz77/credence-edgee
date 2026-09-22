@@ -32,11 +32,16 @@ export const calculateTargetDate = (deadline, createdAt, duration) => {
 };
 
 const CountdownTimer = ({ deadline, createdAt, duration, onExpire }) => {
-  const targetDate = calculateTargetDate(deadline, createdAt, duration);
   const [timeLeft, setTimeLeft] = useState(null);
+  const [hasTarget, setHasTarget] = useState(false);
 
   useEffect(() => {
-    if (!targetDate) return;
+    const targetDate = calculateTargetDate(deadline, createdAt, duration);
+    if (!targetDate) {
+      setHasTarget(false);
+      return;
+    }
+    setHasTarget(true);
 
     const updateTimer = () => {
       const now = new Date().getTime();
@@ -67,9 +72,9 @@ const CountdownTimer = ({ deadline, createdAt, duration, onExpire }) => {
     const interval = setInterval(updateTimer, 1000);
 
     return () => clearInterval(interval);
-  }, [deadline, createdAt, duration]);
+  }, [deadline, createdAt, duration, onExpire]);
 
-  if (!targetDate || !timeLeft) {
+  if (!hasTarget || !timeLeft) {
     return null;
   }
 
