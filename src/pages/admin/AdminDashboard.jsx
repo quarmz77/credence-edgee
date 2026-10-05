@@ -100,68 +100,85 @@ const AdminDashboard = () => {
         )}
       </div>
 
-      <div className="card" style={{ padding: "24px" }}>
+      <div className="card" style={{ padding: "24px", border: "1px solid #e2e8f0" }}>
         <h3
           style={{
-            fontFamily: "'Clash Display',sans-serif",
             fontSize: 16,
-            fontWeight: 700,
-            marginBottom: 16,
+            fontWeight: 800,
+            marginBottom: 20,
             display: "flex",
             alignItems: "center",
             gap: 8,
+            color: "#0f172a",
           }}
         >
-          <LayoutGrid size={18} /> Control Panel
+          <LayoutGrid size={18} style={{ color: "#059669" }} /> Platform Management Panel
         </h3>
         <div
-          style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}
+          style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 14 }}
         >
           {[
-            [
-              <FolderOpen size={20} key="projects" />,
-              "Manage Projects",
-              "/admin/projects",
-            ],
-            [<Users size={20} key="users" />, "Manage Users", "/admin/users"],
-            [
-              <FileText size={20} key="submissions" />,
-              "Review Submissions",
-              "/admin/submissions",
-            ],
-            [
-              <Star size={20} key="ratings" />,
-              "Ratings Manager",
-              "/admin/ratings",
-            ],
-            [
-              <FileText size={20} key="certificates" />,
-              "Certificates",
-              "/admin/certificates",
-            ],
-          ].map(([icon, label, path]) => (
+            {
+              icon: <FolderOpen size={20} />,
+              label: "Manage Projects",
+              desc: "Review and approve/reject company-submitted projects",
+              path: "/admin/projects",
+              badge: "Approval Required",
+            },
+            {
+              icon: <Users size={20} />,
+              label: "Manage Users",
+              desc: "Inspect, manage, and suspend user accounts",
+              path: "/admin/users",
+              badge: "Access Control",
+            },
+            {
+              icon: <FileText size={20} />,
+              label: "Review Submissions",
+              desc: "Grade student work submissions and issue ratings",
+              path: "/admin/submissions",
+              badge: "Evaluation",
+            },
+            {
+              icon: <Star size={20} />,
+              label: "Ratings Manager",
+              desc: "Oversee rating records and student performance reviews",
+              path: "/admin/ratings",
+              badge: "Quality Audit",
+            },
+            {
+              icon: <CheckSquare size={20} />,
+              label: "Certificates Approval",
+              desc: "Verify and approve issued achievement certificates",
+              path: "/admin/certificates",
+              badge: "Verification",
+            },
+          ].map((item) => (
             <button
-              key={label}
-              onClick={() => nav(path)}
+              key={item.label}
+              onClick={() => nav(item.path)}
+              className="card-hover"
               style={{
                 display: "flex",
-                alignItems: "center",
-                gap: 10,
-                padding: "14px 16px",
-                borderRadius: 10,
-                border: "1px solid #e1ecf8",
-                background: "#fff",
+                flexDirection: "column",
+                gap: 8,
+                padding: "18px 20px",
+                borderRadius: 12,
+                border: "1px solid #e2e8f0",
+                background: "#ffffff",
                 cursor: "pointer",
-                fontSize: 13.5,
-                fontWeight: 600,
-                color: "#0d1f35",
                 textAlign: "left",
+                position: "relative",
               }}
             >
-              <span style={{ display: "flex", alignItems: "center" }}>
-                {icon}
-              </span>{" "}
-              {label}
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 10, color: "#059669", fontWeight: 700 }}>
+                  {item.icon}
+                  <span style={{ fontSize: 15, color: "#0f172a", fontWeight: 700 }}>{item.label}</span>
+                </div>
+                <span className="pill pill-green" style={{ fontSize: 10, padding: "2px 8px" }}>{item.badge}</span>
+              </div>
+              <p style={{ fontSize: 13, color: "#64748b", margin: 0, lineHeight: 1.4 }}>{item.desc}</p>
             </button>
           ))}
         </div>

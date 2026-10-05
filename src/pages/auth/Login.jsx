@@ -105,8 +105,6 @@ const Login = () => {
             Enter your credentials to access your account
           </p>
 
-
-
           <form className="auth-form animate-slide-up delay-200" onSubmit={handleSubmit}>
             <div className="form-group">
               <label className="form-label">
