@@ -25,7 +25,7 @@ Open **http://localhost:5173**
 
 ## Full-stack Docker setup
 
-Docker Desktop with Compose is required. Clone the frontend and backend repositories into sibling folders, with the backend folder named `credify_backend`:
+Docker Desktop with Compose v2 is required. From a folder where you want both repositories, clone the frontend and backend into sibling folders. The backend folder must be named `credify_backend` because Compose mounts it by that path:
 
 ```bash
 git clone https://github.com/quarmz77/credence-edgee.git
@@ -35,11 +35,11 @@ cp .env.example .env
 docker compose up --build
 ```
 
-In PowerShell, use `Copy-Item .env.example .env` instead of `cp`. Open **http://localhost:5173**; the API is at **http://localhost:5000**. The first start installs dependencies and can take a few minutes. Later starts reuse the dependency volumes. Source changes reload automatically.
+In PowerShell, use `Copy-Item .env.example .env` instead of `cp`. Open **http://localhost:5173**; the API health check is at **http://localhost:5000/health**. The first start downloads dependencies and can take a few minutes. Later starts reuse the dependency volumes. Source changes reload automatically.
 
-The copied `.env.example` values are sufficient for a basic local run. Set `JWT_SECRET` to a random local value. Keep `PAYMENT_PROVIDER=manual` and leave Paystack and SMTP credentials blank unless you are testing those integrations with your own credentials. Compose supplies the MongoDB service URL and frontend CORS origin; do not set the container's MongoDB host to `localhost`.
+The copied `.env.example` values are sufficient for a basic local run. Set `JWT_SECRET` to a random value for your local environment. Keep `PAYMENT_PROVIDER=manual` and leave Paystack and SMTP credentials blank unless testing those integrations with your own credentials. Compose supplies the MongoDB service URL and frontend CORS origin; do not set the container's MongoDB host to `localhost`.
 
-Stop the stack with `docker compose down`. Use `docker compose down --volumes` only when you also want to delete local MongoDB data and cached dependencies. Never commit `.env` or use development values in production.
+Run commands from the `credence-edgee` folder. Stop the stack with `docker compose down`. Use `docker compose down --volumes` only when you also want to delete local MongoDB data and cached dependencies. Never commit `.env` or use development values in production.
 
 ## Notes
 
