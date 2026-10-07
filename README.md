@@ -46,3 +46,17 @@ Run commands from the `credence-edgee` folder. Stop the stack with `docker compo
 - Uses `VITE_API_URL` environment variable for the backend base URL
 - Auth state is stored in localStorage with `ce_token` and `ce_user`
 - Pages include auth, public, dashboard, company, and admin
+
+For Docker development, Vite polling is enabled so Windows file changes are detected through Docker Desktop bind mounts. If you change the Compose or Vite configuration, recreate the frontend from `credence-edgee`:
+
+```bash
+docker compose up -d --force-recreate frontend
+```
+
+If the page still looks unchanged, hard-refresh **http://localhost:5173** with `Ctrl+Shift+R`. This development container serves the mounted source; it does not use the production image's built `dist` files.
+
+The Compose file in this repository is for development and uses the Node/Vite image; `--build` does not build the Nginx production frontend. To build the production frontend image, run from the parent repository root:
+
+```bash
+docker compose -f docker-compose.prod.yml build frontend
+```
